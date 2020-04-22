@@ -57,6 +57,7 @@ const lightTheme = [
     '--textAlt: #fff',
     '--inactive: rgba(0,0,0,.3)',
     '--background: white',
+    `--menu: #dbdbdb`,
   ];
   
   const darkTheme = [
@@ -68,4 +69,5 @@ const lightTheme = [
     '--textAlt: #fff',
     '--inactive: rgba(255,255,255,.3)',
     '--background: #2D2D2D',
+    `--menu: #363636`
   ];

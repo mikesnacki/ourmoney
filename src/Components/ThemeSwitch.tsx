@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { IoMdMoon as Moon, IoMdSunny as Sun } from 'react-icons/io';
 import ThemeContext from "../Context/ThemeContext"
-import { css, keyframes } from 'emotion'
+import { css } from 'emotion'
 
 
 
@@ -13,20 +13,19 @@ const ThemeSwitch =()=>{
         travel: "0px", backgroundColor: "#333333", svgColor: "#f2ed6f"
     } 
     : {
-        travel: "20px", backgroundColor: "white", svgColor: "#cf7500"
+        travel: "30px", backgroundColor: "white", svgColor: "#cf7500"
     }
 
     const svg = `
                 position: absolute;
                 cursor: pointer;
                 background-color: ${checked.backgroundColor};
-                -webkit-transition: .4s;
                 transition: .4s;
                 border-radius: 50%;
-                width: 20px;
-                height: 20px;
+                width: 40px;
+                height: 40px;
                 left: 4px;
-                bottom: 4px;
+                top: 4px;
                 color: ${checked.svgColor};
                 -webkit-transition: .4s;
                 transition: .4s;
@@ -36,10 +35,19 @@ const ThemeSwitch =()=>{
                 `   
     
     return (
-    <label className="switch">
+    <label 
+        className={css`position: fixed;
+        bottom: 5vh;
+        left: 2vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 30px;`}>
         <button
             className={css`
-            background-color: transparent
+            background-color: transparent;
+            align-items: center;
             `}
             onClick={()=>toggle()}
         />
@@ -52,7 +60,8 @@ const ThemeSwitch =()=>{
             bottom: 0;
             background-color: ${checked.backgroundColor};
             border-radius: 20px;
-            height: 28px;
+            height: 48px;
+            width: 80px;
             box-shadow: 1px 2px 6px 2px hsla(0, 0%,0%, 0.2);
         `}
         ></span>

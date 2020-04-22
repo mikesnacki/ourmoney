@@ -11,6 +11,7 @@ function App() {
     <ThemeProvider>
       <>
         <Header/>
+        <ThemeSwitch/>
       </>
     </ThemeProvider>
   );
