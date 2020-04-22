@@ -1,0 +1,25 @@
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  spouse: String!
+  createdAt: DateTime! @createdAt
+  Incomes: [Income]
+  Expenses: [Expense]
+}
+
+type Income {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  title: String!
+  amount: Float
+  user: User!
+}
+
+type Expense {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  title: String!
+  amount: Float
+  user: User!
+}

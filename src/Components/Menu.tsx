@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { css } from 'emotion'
+import { Link } from "react-router-dom"
 
 const Menu =()=>{
 
@@ -9,6 +10,7 @@ const Menu =()=>{
         <>
             <button className={css`
             height: 50px;
+            width: 50px;
             display:flex;
             flex-direction: column; 
             justify-content: center
@@ -24,7 +26,7 @@ const Menu =()=>{
                 <div className={`lines line3-${menuOut}`}></div>
             </button>
             <div className= {`menu menu-${menuOut}`}>
-                 <h2>hi</h2>
+                <Link to="/">Home</Link>
             </div>
         </>
     )

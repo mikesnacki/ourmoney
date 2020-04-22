@@ -18,7 +18,7 @@ p {
   color: var(--text); 
 }
 
-h2 { 
+h2, h3, h4, h5 { 
   color: var(--heading); 
 }
 
@@ -107,3 +107,16 @@ input {
   width: 0px;
 }
 
+.loading-container{
+  margin: 20vh auto;
+}
+
+.loader {
+  margin: 20vh auto;
+  border: 16px solid var(--main); 
+  border-top: 16px solid var(--main);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
