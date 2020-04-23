@@ -4,8 +4,8 @@ type User {
   email: String! @unique
   spouse: String!
   createdAt: DateTime! @createdAt
-  Incomes: [Income]
-  Expenses: [Expense]
+  incomes: [Income]! @relation(link: INLINE)
+  expenses: [Expense]! @relation(link: INLINE)
 }
 
 type Income {
@@ -13,7 +13,7 @@ type Income {
   createdAt: DateTime! @createdAt
   title: String!
   amount: Float
-  user: User!
+  user: User! 
 }
 
 type Expense {
@@ -21,5 +21,5 @@ type Expense {
   createdAt: DateTime! @createdAt
   title: String!
   amount: Float
-  user: User!
+  user: User! 
 }

@@ -531,8 +531,8 @@ type User {
   email: String!
   spouse: String!
   createdAt: DateTime!
-  Incomes(where: IncomeWhereInput, orderBy: IncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Income!]
-  Expenses(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Expense!]
+  incomes(where: IncomeWhereInput, orderBy: IncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Income!]
+  expenses(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Expense!]
 }
 
 type UserConnection {
@@ -546,8 +546,8 @@ input UserCreateInput {
   name: String!
   email: String!
   spouse: String!
-  Incomes: IncomeCreateManyWithoutUserInput
-  Expenses: ExpenseCreateManyWithoutUserInput
+  incomes: IncomeCreateManyWithoutUserInput
+  expenses: ExpenseCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutExpensesInput {
@@ -565,7 +565,7 @@ input UserCreateWithoutExpensesInput {
   name: String!
   email: String!
   spouse: String!
-  Incomes: IncomeCreateManyWithoutUserInput
+  incomes: IncomeCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutIncomesInput {
@@ -573,7 +573,7 @@ input UserCreateWithoutIncomesInput {
   name: String!
   email: String!
   spouse: String!
-  Expenses: ExpenseCreateManyWithoutUserInput
+  expenses: ExpenseCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -622,8 +622,8 @@ input UserUpdateInput {
   name: String
   email: String
   spouse: String
-  Incomes: IncomeUpdateManyWithoutUserInput
-  Expenses: ExpenseUpdateManyWithoutUserInput
+  incomes: IncomeUpdateManyWithoutUserInput
+  expenses: ExpenseUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -650,14 +650,14 @@ input UserUpdateWithoutExpensesDataInput {
   name: String
   email: String
   spouse: String
-  Incomes: IncomeUpdateManyWithoutUserInput
+  incomes: IncomeUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutIncomesDataInput {
   name: String
   email: String
   spouse: String
-  Expenses: ExpenseUpdateManyWithoutUserInput
+  expenses: ExpenseUpdateManyWithoutUserInput
 }
 
 input UserUpsertWithoutExpensesInput {
@@ -735,8 +735,8 @@ input UserWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  Incomes_some: IncomeWhereInput
-  Expenses_some: ExpenseWhereInput
+  incomes_some: IncomeWhereInput
+  expenses_some: ExpenseWhereInput
   AND: [UserWhereInput!]
 }
 

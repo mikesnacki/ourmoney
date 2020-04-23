@@ -251,7 +251,7 @@ export interface UserCreateWithoutExpensesInput {
   name: String;
   email: String;
   spouse: String;
-  Incomes?: Maybe<IncomeCreateManyWithoutUserInput>;
+  incomes?: Maybe<IncomeCreateManyWithoutUserInput>;
 }
 
 export interface ExpenseWhereInput {
@@ -340,8 +340,8 @@ export interface UserCreateInput {
   name: String;
   email: String;
   spouse: String;
-  Incomes?: Maybe<IncomeCreateManyWithoutUserInput>;
-  Expenses?: Maybe<ExpenseCreateManyWithoutUserInput>;
+  incomes?: Maybe<IncomeCreateManyWithoutUserInput>;
+  expenses?: Maybe<ExpenseCreateManyWithoutUserInput>;
 }
 
 export interface UserUpdateOneRequiredWithoutExpensesInput {
@@ -360,7 +360,7 @@ export interface UserUpdateWithoutExpensesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   spouse?: Maybe<String>;
-  Incomes?: Maybe<IncomeUpdateManyWithoutUserInput>;
+  incomes?: Maybe<IncomeUpdateManyWithoutUserInput>;
 }
 
 export type IncomeWhereUniqueInput = AtLeastOne<{
@@ -470,7 +470,7 @@ export interface UserUpdateWithoutIncomesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   spouse?: Maybe<String>;
-  Expenses?: Maybe<ExpenseUpdateManyWithoutUserInput>;
+  expenses?: Maybe<ExpenseUpdateManyWithoutUserInput>;
 }
 
 export interface IncomeScalarWhereInput {
@@ -588,8 +588,8 @@ export interface UserWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
-  Incomes_some?: Maybe<IncomeWhereInput>;
-  Expenses_some?: Maybe<ExpenseWhereInput>;
+  incomes_some?: Maybe<IncomeWhereInput>;
+  expenses_some?: Maybe<ExpenseWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
@@ -691,8 +691,8 @@ export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   spouse?: Maybe<String>;
-  Incomes?: Maybe<IncomeUpdateManyWithoutUserInput>;
-  Expenses?: Maybe<ExpenseUpdateManyWithoutUserInput>;
+  incomes?: Maybe<IncomeUpdateManyWithoutUserInput>;
+  expenses?: Maybe<ExpenseUpdateManyWithoutUserInput>;
 }
 
 export interface UserCreateWithoutIncomesInput {
@@ -700,7 +700,7 @@ export interface UserCreateWithoutIncomesInput {
   name: String;
   email: String;
   spouse: String;
-  Expenses?: Maybe<ExpenseCreateManyWithoutUserInput>;
+  expenses?: Maybe<ExpenseCreateManyWithoutUserInput>;
 }
 
 export interface UserCreateOneWithoutIncomesInput {
@@ -833,7 +833,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   email: () => Promise<String>;
   spouse: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
-  Incomes: <T = FragmentableArray<Income>>(args?: {
+  incomes: <T = FragmentableArray<Income>>(args?: {
     where?: IncomeWhereInput;
     orderBy?: IncomeOrderByInput;
     skip?: Int;
@@ -842,7 +842,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  Expenses: <T = FragmentableArray<Expense>>(args?: {
+  expenses: <T = FragmentableArray<Expense>>(args?: {
     where?: ExpenseWhereInput;
     orderBy?: ExpenseOrderByInput;
     skip?: Int;
@@ -861,7 +861,7 @@ export interface UserSubscription
   email: () => Promise<AsyncIterator<String>>;
   spouse: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  Incomes: <T = Promise<AsyncIterator<IncomeSubscription>>>(args?: {
+  incomes: <T = Promise<AsyncIterator<IncomeSubscription>>>(args?: {
     where?: IncomeWhereInput;
     orderBy?: IncomeOrderByInput;
     skip?: Int;
@@ -870,7 +870,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  Expenses: <T = Promise<AsyncIterator<ExpenseSubscription>>>(args?: {
+  expenses: <T = Promise<AsyncIterator<ExpenseSubscription>>>(args?: {
     where?: ExpenseWhereInput;
     orderBy?: ExpenseOrderByInput;
     skip?: Int;
@@ -889,7 +889,7 @@ export interface UserNullablePromise
   email: () => Promise<String>;
   spouse: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
-  Incomes: <T = FragmentableArray<Income>>(args?: {
+  incomes: <T = FragmentableArray<Income>>(args?: {
     where?: IncomeWhereInput;
     orderBy?: IncomeOrderByInput;
     skip?: Int;
@@ -898,7 +898,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  Expenses: <T = FragmentableArray<Expense>>(args?: {
+  expenses: <T = FragmentableArray<Expense>>(args?: {
     where?: ExpenseWhereInput;
     orderBy?: ExpenseOrderByInput;
     skip?: Int;
