@@ -1,10 +1,25 @@
 import React, { useState } from 'react'
 import { css } from 'emotion'
 import { Link } from "react-router-dom"
+import {useAuth0} from "../Hooks/useAuth"
 
-const Menu =()=>{
+type DisplayProps = {
+    navDisplay: boolean, 
+    activateNavDisplay: (navDisplay: boolean) => void
+}
 
-    const [menuOut, setMenuOut] = useState<boolean>(false)
+const Menu =(Props: DisplayProps)=>{
+
+    // const { isAuthenticated, loginWithRedirect, logout} = useAuth0();
+
+    const isAuthenticated:boolean  = false
+
+    const links:(JSX.Element | boolean)[] = [
+        <Link key={1} className="nav-links" to="/" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Home</Link>,
+        <Link key={2} className="nav-links" to="/budget" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Our Budget </Link>,
+        // !isAuthenticated && <span key={3} className="nav-links" onClick={()=>loginWithRedirect({})}>Login</span>,
+        // isAuthenticated && <span key={4} className="nav-links"onClick={()=>logout()}>Logout</span>,
+    ]
 
     return(
         <>
@@ -19,14 +34,23 @@ const Menu =()=>{
             top: 3vh;
             padding: 0;
             `}
-            onClick={()=>setMenuOut(!menuOut)}
+            onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}
             >
-                <div className={`lines line1-${menuOut}`}></div>
-                <div className={`lines line2-${menuOut}`}></div>
-                <div className={`lines line3-${menuOut}`}></div>
+                <div className={`lines line1-${Props.navDisplay}`}></div>
+                <div className={`lines line2-${Props.navDisplay}`}></div>
+                <div className={`lines line3-${Props.navDisplay}`}></div>
             </button>
-            <div className= {`menu menu-${menuOut}`}>
-                <Link to="/">Home</Link>
+            <div className= {`menu menu-${Props.navDisplay}`}>
+                <ul
+                className={css`
+                    display:flex;
+                    flex-direction: column; 
+                    justify-content: center;
+                    margin-bottom: 50%;
+                    margin-top: 30%;
+                    `}>
+                    {links}
+                </ul>
             </div>
         </>
     )

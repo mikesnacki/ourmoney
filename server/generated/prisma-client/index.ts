@@ -206,8 +206,6 @@ export type UserOrderByInput =
   | "name_DESC"
   | "email_ASC"
   | "email_DESC"
-  | "spouse_ASC"
-  | "spouse_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC";
 
@@ -250,7 +248,6 @@ export interface UserCreateWithoutExpensesInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
-  spouse: String;
   incomes?: Maybe<IncomeCreateManyWithoutUserInput>;
 }
 
@@ -326,7 +323,6 @@ export interface IncomeCreateWithoutUserInput {
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
-  spouse?: Maybe<String>;
 }
 
 export interface ExpenseUpdateInput {
@@ -339,7 +335,6 @@ export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
-  spouse: String;
   incomes?: Maybe<IncomeCreateManyWithoutUserInput>;
   expenses?: Maybe<ExpenseCreateManyWithoutUserInput>;
 }
@@ -359,7 +354,6 @@ export interface UserUpsertWithoutIncomesInput {
 export interface UserUpdateWithoutExpensesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
-  spouse?: Maybe<String>;
   incomes?: Maybe<IncomeUpdateManyWithoutUserInput>;
 }
 
@@ -469,7 +463,6 @@ export interface IncomeUpsertWithWhereUniqueWithoutUserInput {
 export interface UserUpdateWithoutIncomesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
-  spouse?: Maybe<String>;
   expenses?: Maybe<ExpenseUpdateManyWithoutUserInput>;
 }
 
@@ -566,20 +559,6 @@ export interface UserWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
-  spouse?: Maybe<String>;
-  spouse_not?: Maybe<String>;
-  spouse_in?: Maybe<String[] | String>;
-  spouse_not_in?: Maybe<String[] | String>;
-  spouse_lt?: Maybe<String>;
-  spouse_lte?: Maybe<String>;
-  spouse_gt?: Maybe<String>;
-  spouse_gte?: Maybe<String>;
-  spouse_contains?: Maybe<String>;
-  spouse_not_contains?: Maybe<String>;
-  spouse_starts_with?: Maybe<String>;
-  spouse_not_starts_with?: Maybe<String>;
-  spouse_ends_with?: Maybe<String>;
-  spouse_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -690,7 +669,6 @@ export interface IncomeUpdateInput {
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
-  spouse?: Maybe<String>;
   incomes?: Maybe<IncomeUpdateManyWithoutUserInput>;
   expenses?: Maybe<ExpenseUpdateManyWithoutUserInput>;
 }
@@ -699,7 +677,6 @@ export interface UserCreateWithoutIncomesInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
-  spouse: String;
   expenses?: Maybe<ExpenseCreateManyWithoutUserInput>;
 }
 
@@ -772,7 +749,6 @@ export interface UserPreviousValues {
   id: ID_Output;
   name: String;
   email: String;
-  spouse: String;
   createdAt: DateTimeOutput;
 }
 
@@ -782,7 +758,6 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
-  spouse: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
 }
 
@@ -792,7 +767,6 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
-  spouse: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
@@ -823,7 +797,6 @@ export interface User {
   id: ID_Output;
   name: String;
   email: String;
-  spouse: String;
   createdAt: DateTimeOutput;
 }
 
@@ -831,7 +804,6 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
-  spouse: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   incomes: <T = FragmentableArray<Income>>(args?: {
     where?: IncomeWhereInput;
@@ -859,7 +831,6 @@ export interface UserSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
-  spouse: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   incomes: <T = Promise<AsyncIterator<IncomeSubscription>>>(args?: {
     where?: IncomeWhereInput;
@@ -887,7 +858,6 @@ export interface UserNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
-  spouse: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   incomes: <T = FragmentableArray<Income>>(args?: {
     where?: IncomeWhereInput;

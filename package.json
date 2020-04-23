@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.0.0-beta.44",
+    "@auth0/auth0-spa-js": "^1.7.0",
     "@emotion/styled": "^10.0.27",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -12,12 +14,15 @@
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "@types/react-router-dom": "^5.1.4",
+    "apollo-boost": "^0.4.7",
+    "concurrently": "^5.1.0",
     "dom": "0.0.3",
     "emotion": "^10.0.27",
     "emotion-theming": "^10.0.27",
     "node-sass": "^4.13.1",
     "prisma-client-lib": "^1.34.10",
     "react": "^16.13.1",
+    "react-apollo": "^3.1.5",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
     "react-router-dom": "^5.1.2",
@@ -28,8 +33,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "server": " cd ./server && prisma deploy",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"npm run server\" \" npm run start\""
   },
   "eslintConfig": {
     "extends": "react-app"

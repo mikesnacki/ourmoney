@@ -1,11 +1,10 @@
 type User {
-  id: ID! @id
+  id: ID! @id @unique
   name: String!
   email: String! @unique
-  spouse: String!
   createdAt: DateTime! @createdAt
-  incomes: [Income]! @relation(link: INLINE)
-  expenses: [Expense]! @relation(link: INLINE)
+  incomes: [Income] @relation(link: INLINE)
+  expenses: [Expense] @relation(link: INLINE)
 }
 
 type Income {

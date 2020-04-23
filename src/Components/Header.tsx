@@ -1,8 +1,10 @@
-import React from 'react'
+import React,  {useState} from 'react'
 import Menu from "./Menu"
 import { css } from 'emotion'
 
 const Header =()=>{
+
+    const [navDisplay, activateNavDisplay] = useState<boolean>(false)
     return(
         <header className={css`
             display: flex;
@@ -12,7 +14,10 @@ const Header =()=>{
             align-items: center;
         `}>
             <h2>our<span className={css`color: #29c7ac;`}>$</span>Money</h2>
-            <Menu/>
+            <Menu
+            navDisplay={navDisplay}
+            activateNavDisplay={activateNavDisplay}
+            />
         </header>
     )
 }

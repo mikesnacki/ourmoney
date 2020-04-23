@@ -529,7 +529,6 @@ type User {
   id: ID!
   name: String!
   email: String!
-  spouse: String!
   createdAt: DateTime!
   incomes(where: IncomeWhereInput, orderBy: IncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Income!]
   expenses(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Expense!]
@@ -545,7 +544,6 @@ input UserCreateInput {
   id: ID
   name: String!
   email: String!
-  spouse: String!
   incomes: IncomeCreateManyWithoutUserInput
   expenses: ExpenseCreateManyWithoutUserInput
 }
@@ -564,7 +562,6 @@ input UserCreateWithoutExpensesInput {
   id: ID
   name: String!
   email: String!
-  spouse: String!
   incomes: IncomeCreateManyWithoutUserInput
 }
 
@@ -572,7 +569,6 @@ input UserCreateWithoutIncomesInput {
   id: ID
   name: String!
   email: String!
-  spouse: String!
   expenses: ExpenseCreateManyWithoutUserInput
 }
 
@@ -588,8 +584,6 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
-  spouse_ASC
-  spouse_DESC
   createdAt_ASC
   createdAt_DESC
 }
@@ -598,7 +592,6 @@ type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
-  spouse: String!
   createdAt: DateTime!
 }
 
@@ -621,7 +614,6 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   name: String
   email: String
-  spouse: String
   incomes: IncomeUpdateManyWithoutUserInput
   expenses: ExpenseUpdateManyWithoutUserInput
 }
@@ -629,7 +621,6 @@ input UserUpdateInput {
 input UserUpdateManyMutationInput {
   name: String
   email: String
-  spouse: String
 }
 
 input UserUpdateOneRequiredWithoutExpensesInput {
@@ -649,14 +640,12 @@ input UserUpdateOneRequiredWithoutIncomesInput {
 input UserUpdateWithoutExpensesDataInput {
   name: String
   email: String
-  spouse: String
   incomes: IncomeUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutIncomesDataInput {
   name: String
   email: String
-  spouse: String
   expenses: ExpenseUpdateManyWithoutUserInput
 }
 
@@ -713,20 +702,6 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  spouse: String
-  spouse_not: String
-  spouse_in: [String!]
-  spouse_not_in: [String!]
-  spouse_lt: String
-  spouse_lte: String
-  spouse_gt: String
-  spouse_gte: String
-  spouse_contains: String
-  spouse_not_contains: String
-  spouse_starts_with: String
-  spouse_not_starts_with: String
-  spouse_ends_with: String
-  spouse_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
