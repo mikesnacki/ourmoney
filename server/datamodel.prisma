@@ -1,24 +1,21 @@
-type User {
-  id: ID! @id @unique
+enum LineItemType {
+  INCOME
+  EXPENSE
+}
+
+type LineItem {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
   name: String!
-  email: String! @unique
-  createdAt: DateTime! @createdAt
-  incomes: [Income] @relation(link: INLINE)
-  expenses: [Expense] @relation(link: INLINE)
+  amount: Float!
+  type: LineItemType!
+  user: User!
 }
 
-type Income {
+type User {
   id: ID! @id
-  createdAt: DateTime! @createdAt
-  title: String!
-  amount: Float
-  user: User! 
-}
-
-type Expense {
-  id: ID! @id
-  createdAt: DateTime! @createdAt
-  title: String!
-  amount: Float
-  user: User! 
+  name: String!
+  email: String!
+  relatedUser: User @relation(link: INLINE)
+  lineItems: [LineItem]
 }

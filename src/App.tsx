@@ -6,20 +6,20 @@ import {ThemeProvider} from "./Context/ThemeContext"
 import history from "./Utils/history"
 import { Router, Route, Switch } from "react-router-dom";
 import Loading from "./Components/Loading"
-import {Auth0Provider} from "./Hooks/useAuth"
-import config from "./auth_config.json";
+// import {Auth0Provider} from "./Hooks/useAuth"
+// import config from "./auth_config.json";
 import { ApolloProvider, ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
 
 const Home = React.lazy(()=>import("./Components/Home"))
 const Budget = React.lazy(()=>import("./Components/Budget"))
 
-const onRedirectCallback = (appState: any) => {
-  history.push(
-    appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname
-  );
-};
+// const onRedirectCallback = (appState: any) => {
+//   history.push(
+//     appState && appState.targetUrl
+//       ? appState.targetUrl
+//       : window.location.pathname
+//   );
+// };
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),

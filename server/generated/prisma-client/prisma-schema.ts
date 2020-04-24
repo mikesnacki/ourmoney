@@ -2,11 +2,7 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateExpense {
-  count: Int!
-}
-
-type AggregateIncome {
+export const typeDefs = /* GraphQL */ `type AggregateLineItem {
   count: Int!
 }
 
@@ -20,62 +16,68 @@ type BatchPayload {
 
 scalar DateTime
 
-type Expense {
+type LineItem {
   id: ID!
   createdAt: DateTime!
-  title: String!
-  amount: Float
+  name: String!
+  amount: Float!
+  type: LineItemType!
   user: User!
 }
 
-type ExpenseConnection {
+type LineItemConnection {
   pageInfo: PageInfo!
-  edges: [ExpenseEdge]!
-  aggregate: AggregateExpense!
+  edges: [LineItemEdge]!
+  aggregate: AggregateLineItem!
 }
 
-input ExpenseCreateInput {
+input LineItemCreateInput {
   id: ID
-  title: String!
-  amount: Float
-  user: UserCreateOneWithoutExpensesInput!
+  name: String!
+  amount: Float!
+  type: LineItemType!
+  user: UserCreateOneWithoutLineItemsInput!
 }
 
-input ExpenseCreateManyWithoutUserInput {
-  create: [ExpenseCreateWithoutUserInput!]
-  connect: [ExpenseWhereUniqueInput!]
+input LineItemCreateManyWithoutUserInput {
+  create: [LineItemCreateWithoutUserInput!]
+  connect: [LineItemWhereUniqueInput!]
 }
 
-input ExpenseCreateWithoutUserInput {
+input LineItemCreateWithoutUserInput {
   id: ID
-  title: String!
-  amount: Float
+  name: String!
+  amount: Float!
+  type: LineItemType!
 }
 
-type ExpenseEdge {
-  node: Expense!
+type LineItemEdge {
+  node: LineItem!
   cursor: String!
 }
 
-enum ExpenseOrderByInput {
+enum LineItemOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  title_ASC
-  title_DESC
+  name_ASC
+  name_DESC
   amount_ASC
   amount_DESC
+  type_ASC
+  type_DESC
 }
 
-type ExpensePreviousValues {
+type LineItemPreviousValues {
   id: ID!
   createdAt: DateTime!
-  title: String!
-  amount: Float
+  name: String!
+  amount: Float!
+  type: LineItemType!
 }
 
-input ExpenseScalarWhereInput {
+input LineItemScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -98,20 +100,20 @@ input ExpenseScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   amount: Float
   amount_not: Float
   amount_in: [Float!]
@@ -120,77 +122,92 @@ input ExpenseScalarWhereInput {
   amount_lte: Float
   amount_gt: Float
   amount_gte: Float
-  AND: [ExpenseScalarWhereInput!]
-  OR: [ExpenseScalarWhereInput!]
-  NOT: [ExpenseScalarWhereInput!]
+  type: LineItemType
+  type_not: LineItemType
+  type_in: [LineItemType!]
+  type_not_in: [LineItemType!]
+  AND: [LineItemScalarWhereInput!]
+  OR: [LineItemScalarWhereInput!]
+  NOT: [LineItemScalarWhereInput!]
 }
 
-type ExpenseSubscriptionPayload {
+type LineItemSubscriptionPayload {
   mutation: MutationType!
-  node: Expense
+  node: LineItem
   updatedFields: [String!]
-  previousValues: ExpensePreviousValues
+  previousValues: LineItemPreviousValues
 }
 
-input ExpenseSubscriptionWhereInput {
+input LineItemSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: ExpenseWhereInput
-  AND: [ExpenseSubscriptionWhereInput!]
+  node: LineItemWhereInput
+  AND: [LineItemSubscriptionWhereInput!]
+  OR: [LineItemSubscriptionWhereInput!]
+  NOT: [LineItemSubscriptionWhereInput!]
 }
 
-input ExpenseUpdateInput {
-  title: String
+enum LineItemType {
+  INCOME
+  EXPENSE
+}
+
+input LineItemUpdateInput {
+  name: String
   amount: Float
-  user: UserUpdateOneRequiredWithoutExpensesInput
+  type: LineItemType
+  user: UserUpdateOneRequiredWithoutLineItemsInput
 }
 
-input ExpenseUpdateManyDataInput {
-  title: String
+input LineItemUpdateManyDataInput {
+  name: String
   amount: Float
+  type: LineItemType
 }
 
-input ExpenseUpdateManyMutationInput {
-  title: String
+input LineItemUpdateManyMutationInput {
+  name: String
   amount: Float
+  type: LineItemType
 }
 
-input ExpenseUpdateManyWithoutUserInput {
-  create: [ExpenseCreateWithoutUserInput!]
-  delete: [ExpenseWhereUniqueInput!]
-  connect: [ExpenseWhereUniqueInput!]
-  set: [ExpenseWhereUniqueInput!]
-  disconnect: [ExpenseWhereUniqueInput!]
-  update: [ExpenseUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [ExpenseUpsertWithWhereUniqueWithoutUserInput!]
-  deleteMany: [ExpenseScalarWhereInput!]
-  updateMany: [ExpenseUpdateManyWithWhereNestedInput!]
+input LineItemUpdateManyWithoutUserInput {
+  create: [LineItemCreateWithoutUserInput!]
+  delete: [LineItemWhereUniqueInput!]
+  connect: [LineItemWhereUniqueInput!]
+  set: [LineItemWhereUniqueInput!]
+  disconnect: [LineItemWhereUniqueInput!]
+  update: [LineItemUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [LineItemUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [LineItemScalarWhereInput!]
+  updateMany: [LineItemUpdateManyWithWhereNestedInput!]
 }
 
-input ExpenseUpdateManyWithWhereNestedInput {
-  where: ExpenseScalarWhereInput!
-  data: ExpenseUpdateManyDataInput!
+input LineItemUpdateManyWithWhereNestedInput {
+  where: LineItemScalarWhereInput!
+  data: LineItemUpdateManyDataInput!
 }
 
-input ExpenseUpdateWithoutUserDataInput {
-  title: String
+input LineItemUpdateWithoutUserDataInput {
+  name: String
   amount: Float
+  type: LineItemType
 }
 
-input ExpenseUpdateWithWhereUniqueWithoutUserInput {
-  where: ExpenseWhereUniqueInput!
-  data: ExpenseUpdateWithoutUserDataInput!
+input LineItemUpdateWithWhereUniqueWithoutUserInput {
+  where: LineItemWhereUniqueInput!
+  data: LineItemUpdateWithoutUserDataInput!
 }
 
-input ExpenseUpsertWithWhereUniqueWithoutUserInput {
-  where: ExpenseWhereUniqueInput!
-  update: ExpenseUpdateWithoutUserDataInput!
-  create: ExpenseCreateWithoutUserInput!
+input LineItemUpsertWithWhereUniqueWithoutUserInput {
+  where: LineItemWhereUniqueInput!
+  update: LineItemUpdateWithoutUserDataInput!
+  create: LineItemCreateWithoutUserInput!
 }
 
-input ExpenseWhereInput {
+input LineItemWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -213,20 +230,20 @@ input ExpenseWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   amount: Float
   amount_not: Float
   amount_in: [Float!]
@@ -235,252 +252,29 @@ input ExpenseWhereInput {
   amount_lte: Float
   amount_gt: Float
   amount_gte: Float
+  type: LineItemType
+  type_not: LineItemType
+  type_in: [LineItemType!]
+  type_not_in: [LineItemType!]
   user: UserWhereInput
-  AND: [ExpenseWhereInput!]
+  AND: [LineItemWhereInput!]
+  OR: [LineItemWhereInput!]
+  NOT: [LineItemWhereInput!]
 }
 
-input ExpenseWhereUniqueInput {
-  id: ID
-}
-
-type Income {
-  id: ID!
-  createdAt: DateTime!
-  title: String!
-  amount: Float
-  user: User!
-}
-
-type IncomeConnection {
-  pageInfo: PageInfo!
-  edges: [IncomeEdge]!
-  aggregate: AggregateIncome!
-}
-
-input IncomeCreateInput {
-  id: ID
-  title: String!
-  amount: Float
-  user: UserCreateOneWithoutIncomesInput!
-}
-
-input IncomeCreateManyWithoutUserInput {
-  create: [IncomeCreateWithoutUserInput!]
-  connect: [IncomeWhereUniqueInput!]
-}
-
-input IncomeCreateWithoutUserInput {
-  id: ID
-  title: String!
-  amount: Float
-}
-
-type IncomeEdge {
-  node: Income!
-  cursor: String!
-}
-
-enum IncomeOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  title_ASC
-  title_DESC
-  amount_ASC
-  amount_DESC
-}
-
-type IncomePreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  title: String!
-  amount: Float
-}
-
-input IncomeScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  amount: Float
-  amount_not: Float
-  amount_in: [Float!]
-  amount_not_in: [Float!]
-  amount_lt: Float
-  amount_lte: Float
-  amount_gt: Float
-  amount_gte: Float
-  AND: [IncomeScalarWhereInput!]
-  OR: [IncomeScalarWhereInput!]
-  NOT: [IncomeScalarWhereInput!]
-}
-
-type IncomeSubscriptionPayload {
-  mutation: MutationType!
-  node: Income
-  updatedFields: [String!]
-  previousValues: IncomePreviousValues
-}
-
-input IncomeSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: IncomeWhereInput
-  AND: [IncomeSubscriptionWhereInput!]
-}
-
-input IncomeUpdateInput {
-  title: String
-  amount: Float
-  user: UserUpdateOneRequiredWithoutIncomesInput
-}
-
-input IncomeUpdateManyDataInput {
-  title: String
-  amount: Float
-}
-
-input IncomeUpdateManyMutationInput {
-  title: String
-  amount: Float
-}
-
-input IncomeUpdateManyWithoutUserInput {
-  create: [IncomeCreateWithoutUserInput!]
-  delete: [IncomeWhereUniqueInput!]
-  connect: [IncomeWhereUniqueInput!]
-  set: [IncomeWhereUniqueInput!]
-  disconnect: [IncomeWhereUniqueInput!]
-  update: [IncomeUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [IncomeUpsertWithWhereUniqueWithoutUserInput!]
-  deleteMany: [IncomeScalarWhereInput!]
-  updateMany: [IncomeUpdateManyWithWhereNestedInput!]
-}
-
-input IncomeUpdateManyWithWhereNestedInput {
-  where: IncomeScalarWhereInput!
-  data: IncomeUpdateManyDataInput!
-}
-
-input IncomeUpdateWithoutUserDataInput {
-  title: String
-  amount: Float
-}
-
-input IncomeUpdateWithWhereUniqueWithoutUserInput {
-  where: IncomeWhereUniqueInput!
-  data: IncomeUpdateWithoutUserDataInput!
-}
-
-input IncomeUpsertWithWhereUniqueWithoutUserInput {
-  where: IncomeWhereUniqueInput!
-  update: IncomeUpdateWithoutUserDataInput!
-  create: IncomeCreateWithoutUserInput!
-}
-
-input IncomeWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  amount: Float
-  amount_not: Float
-  amount_in: [Float!]
-  amount_not_in: [Float!]
-  amount_lt: Float
-  amount_lte: Float
-  amount_gt: Float
-  amount_gte: Float
-  user: UserWhereInput
-  AND: [IncomeWhereInput!]
-}
-
-input IncomeWhereUniqueInput {
+input LineItemWhereUniqueInput {
   id: ID
 }
 
 scalar Long
 
 type Mutation {
-  createExpense(data: ExpenseCreateInput!): Expense!
-  updateExpense(data: ExpenseUpdateInput!, where: ExpenseWhereUniqueInput!): Expense
-  updateManyExpenses(data: ExpenseUpdateManyMutationInput!, where: ExpenseWhereInput): BatchPayload!
-  upsertExpense(where: ExpenseWhereUniqueInput!, create: ExpenseCreateInput!, update: ExpenseUpdateInput!): Expense!
-  deleteExpense(where: ExpenseWhereUniqueInput!): Expense
-  deleteManyExpenses(where: ExpenseWhereInput): BatchPayload!
-  createIncome(data: IncomeCreateInput!): Income!
-  updateIncome(data: IncomeUpdateInput!, where: IncomeWhereUniqueInput!): Income
-  updateManyIncomes(data: IncomeUpdateManyMutationInput!, where: IncomeWhereInput): BatchPayload!
-  upsertIncome(where: IncomeWhereUniqueInput!, create: IncomeCreateInput!, update: IncomeUpdateInput!): Income!
-  deleteIncome(where: IncomeWhereUniqueInput!): Income
-  deleteManyIncomes(where: IncomeWhereInput): BatchPayload!
+  createLineItem(data: LineItemCreateInput!): LineItem!
+  updateLineItem(data: LineItemUpdateInput!, where: LineItemWhereUniqueInput!): LineItem
+  updateManyLineItems(data: LineItemUpdateManyMutationInput!, where: LineItemWhereInput): BatchPayload!
+  upsertLineItem(where: LineItemWhereUniqueInput!, create: LineItemCreateInput!, update: LineItemUpdateInput!): LineItem!
+  deleteLineItem(where: LineItemWhereUniqueInput!): LineItem
+  deleteManyLineItems(where: LineItemWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -507,12 +301,9 @@ type PageInfo {
 }
 
 type Query {
-  expense(where: ExpenseWhereUniqueInput!): Expense
-  expenses(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Expense]!
-  expensesConnection(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ExpenseConnection!
-  income(where: IncomeWhereUniqueInput!): Income
-  incomes(where: IncomeWhereInput, orderBy: IncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Income]!
-  incomesConnection(where: IncomeWhereInput, orderBy: IncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IncomeConnection!
+  lineItem(where: LineItemWhereUniqueInput!): LineItem
+  lineItems(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LineItem]!
+  lineItemsConnection(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LineItemConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -520,8 +311,7 @@ type Query {
 }
 
 type Subscription {
-  expense(where: ExpenseSubscriptionWhereInput): ExpenseSubscriptionPayload
-  income(where: IncomeSubscriptionWhereInput): IncomeSubscriptionPayload
+  lineItem(where: LineItemSubscriptionWhereInput): LineItemSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -529,9 +319,8 @@ type User {
   id: ID!
   name: String!
   email: String!
-  createdAt: DateTime!
-  incomes(where: IncomeWhereInput, orderBy: IncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Income!]
-  expenses(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Expense!]
+  relatedUser: User
+  lineItems(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LineItem!]
 }
 
 type UserConnection {
@@ -544,32 +333,25 @@ input UserCreateInput {
   id: ID
   name: String!
   email: String!
-  incomes: IncomeCreateManyWithoutUserInput
-  expenses: ExpenseCreateManyWithoutUserInput
+  relatedUser: UserCreateOneInput
+  lineItems: LineItemCreateManyWithoutUserInput
 }
 
-input UserCreateOneWithoutExpensesInput {
-  create: UserCreateWithoutExpensesInput
+input UserCreateOneInput {
+  create: UserCreateInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutIncomesInput {
-  create: UserCreateWithoutIncomesInput
+input UserCreateOneWithoutLineItemsInput {
+  create: UserCreateWithoutLineItemsInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutExpensesInput {
+input UserCreateWithoutLineItemsInput {
   id: ID
   name: String!
   email: String!
-  incomes: IncomeCreateManyWithoutUserInput
-}
-
-input UserCreateWithoutIncomesInput {
-  id: ID
-  name: String!
-  email: String!
-  expenses: ExpenseCreateManyWithoutUserInput
+  relatedUser: UserCreateOneInput
 }
 
 type UserEdge {
@@ -584,15 +366,12 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
-  createdAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -609,13 +388,22 @@ input UserSubscriptionWhereInput {
   updatedFields_contains_some: [String!]
   node: UserWhereInput
   AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateDataInput {
+  name: String
+  email: String
+  relatedUser: UserUpdateOneInput
+  lineItems: LineItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
   name: String
   email: String
-  incomes: IncomeUpdateManyWithoutUserInput
-  expenses: ExpenseUpdateManyWithoutUserInput
+  relatedUser: UserUpdateOneInput
+  lineItems: LineItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -623,40 +411,36 @@ input UserUpdateManyMutationInput {
   email: String
 }
 
-input UserUpdateOneRequiredWithoutExpensesInput {
-  create: UserCreateWithoutExpensesInput
-  update: UserUpdateWithoutExpensesDataInput
-  upsert: UserUpsertWithoutExpensesInput
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutIncomesInput {
-  create: UserCreateWithoutIncomesInput
-  update: UserUpdateWithoutIncomesDataInput
-  upsert: UserUpsertWithoutIncomesInput
+input UserUpdateOneRequiredWithoutLineItemsInput {
+  create: UserCreateWithoutLineItemsInput
+  update: UserUpdateWithoutLineItemsDataInput
+  upsert: UserUpsertWithoutLineItemsInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutExpensesDataInput {
+input UserUpdateWithoutLineItemsDataInput {
   name: String
   email: String
-  incomes: IncomeUpdateManyWithoutUserInput
+  relatedUser: UserUpdateOneInput
 }
 
-input UserUpdateWithoutIncomesDataInput {
-  name: String
-  email: String
-  expenses: ExpenseUpdateManyWithoutUserInput
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
-input UserUpsertWithoutExpensesInput {
-  update: UserUpdateWithoutExpensesDataInput!
-  create: UserCreateWithoutExpensesInput!
-}
-
-input UserUpsertWithoutIncomesInput {
-  update: UserUpdateWithoutIncomesDataInput!
-  create: UserCreateWithoutIncomesInput!
+input UserUpsertWithoutLineItemsInput {
+  update: UserUpdateWithoutLineItemsDataInput!
+  create: UserCreateWithoutLineItemsInput!
 }
 
 input UserWhereInput {
@@ -702,21 +486,16 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  incomes_some: IncomeWhereInput
-  expenses_some: ExpenseWhereInput
+  relatedUser: UserWhereInput
+  lineItems_every: LineItemWhereInput
+  lineItems_some: LineItemWhereInput
+  lineItems_none: LineItemWhereInput
   AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
 }
 
 input UserWhereUniqueInput {
   id: ID
-  email: String
 }
 `
