@@ -1,15 +1,24 @@
 import React from 'react';
+import { css } from "emotion"
+import ILineItem from "../Interfaces/ILineItem"
 
-import { gql, useMutation} from "@apollo/client"
+const LineItem =({lineItem} :{lineItem: ILineItem})=> {
 
-const ADD_INCOME = gql`
-mutation
-`
+    const currFormat = new Intl.NumberFormat("en-US", {
+        style:"currency",
+        currency: "USD",
+        maximumFractionDigits: 2
+    })
 
-const LineItem =()=> {
+
     return (
-        <div>
-
+        <div 
+        onClick={()=>console.log(lineItem.id)}
+        className="lineItem">
+            <p className={css`text-transform: capitalize;`}>{lineItem.name}</p>
+            <p>{lineItem.amount !== undefined && currFormat.format(lineItem.amount)}</p>
         </div>
     )
 }
+
+export default LineItem

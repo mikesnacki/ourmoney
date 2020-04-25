@@ -9,6 +9,7 @@ type LineItem {
   name: String!
   amount: Float!
   type: LineItemType!
+  deleted: Boolean!
   user: User!
 }
 

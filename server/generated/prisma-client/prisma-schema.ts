@@ -22,6 +22,7 @@ type LineItem {
   name: String!
   amount: Float!
   type: LineItemType!
+  deleted: Boolean!
   user: User!
 }
 
@@ -36,6 +37,7 @@ input LineItemCreateInput {
   name: String!
   amount: Float!
   type: LineItemType!
+  deleted: Boolean!
   user: UserCreateOneWithoutLineItemsInput!
 }
 
@@ -49,6 +51,7 @@ input LineItemCreateWithoutUserInput {
   name: String!
   amount: Float!
   type: LineItemType!
+  deleted: Boolean!
 }
 
 type LineItemEdge {
@@ -67,6 +70,8 @@ enum LineItemOrderByInput {
   amount_DESC
   type_ASC
   type_DESC
+  deleted_ASC
+  deleted_DESC
 }
 
 type LineItemPreviousValues {
@@ -75,6 +80,7 @@ type LineItemPreviousValues {
   name: String!
   amount: Float!
   type: LineItemType!
+  deleted: Boolean!
 }
 
 input LineItemScalarWhereInput {
@@ -126,6 +132,8 @@ input LineItemScalarWhereInput {
   type_not: LineItemType
   type_in: [LineItemType!]
   type_not_in: [LineItemType!]
+  deleted: Boolean
+  deleted_not: Boolean
   AND: [LineItemScalarWhereInput!]
   OR: [LineItemScalarWhereInput!]
   NOT: [LineItemScalarWhereInput!]
@@ -158,6 +166,7 @@ input LineItemUpdateInput {
   name: String
   amount: Float
   type: LineItemType
+  deleted: Boolean
   user: UserUpdateOneRequiredWithoutLineItemsInput
 }
 
@@ -165,12 +174,14 @@ input LineItemUpdateManyDataInput {
   name: String
   amount: Float
   type: LineItemType
+  deleted: Boolean
 }
 
 input LineItemUpdateManyMutationInput {
   name: String
   amount: Float
   type: LineItemType
+  deleted: Boolean
 }
 
 input LineItemUpdateManyWithoutUserInput {
@@ -194,6 +205,7 @@ input LineItemUpdateWithoutUserDataInput {
   name: String
   amount: Float
   type: LineItemType
+  deleted: Boolean
 }
 
 input LineItemUpdateWithWhereUniqueWithoutUserInput {
@@ -256,6 +268,8 @@ input LineItemWhereInput {
   type_not: LineItemType
   type_in: [LineItemType!]
   type_not_in: [LineItemType!]
+  deleted: Boolean
+  deleted_not: Boolean
   user: UserWhereInput
   AND: [LineItemWhereInput!]
   OR: [LineItemWhereInput!]
