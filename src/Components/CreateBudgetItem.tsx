@@ -1,50 +1,54 @@
 import React, { useState } from 'react'
-import { useMutation, gql } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 import  ILineItem from "../Interfaces/ILineItem"
 import  ICreateItem from "../Interfaces/ICreateItem"
 import { css } from "emotion"
+import CREATE_NEW_LINE_ITEM from "../Executables/Mutations/CREATE_NEW_LINE_ITEM"
+
 
 const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}:ICreateItem)=> {
 const user:string = "ck9e8smlh000s07914dw7ff5w"
 
-const CREATE_NEW_LINE_ITEM = gql`
-    mutation createLineItem($data: LineItemCreateInput!){
-        createLineItem(data: $data)
-        {
-        name
-        amount
-        type
-        }
+    const initialState = {
+        type: "INCOME",
+        amount: 0,
+        deleted: false,
+        name: "",
+        user: {connect:{id:user}}
     }
-    `
-    const [newLineItem, setNewLineItem] = useState<ILineItem>({
-                                            type: "INCOME",
-                                            amount: 0,
-                                            deleted: false,
-                                            name: "",
-                                            user: {connect:{id:user}}
-    })
 
-    const [createLineItem, {error, data}] = useMutation<{data: ILineItem}>(CREATE_NEW_LINE_ITEM, {
-        variables: {
-            data: { 
-                amount: +newLineItem.amount, 
-                deleted: newLineItem.deleted,
-                name: newLineItem.name,
-                user: newLineItem.user,
-                type: newLineItem.type
+    const [newLineItem, setNewLineItem] = useState<ILineItem>(initialState)
+
+    const [createLineItem, {error, data}] = useMutation<{data: ILineItem}>(
+        CREATE_NEW_LINE_ITEM, 
+        {
+            variables: {
+                data: { 
+                    amount: +newLineItem.amount, 
+                    deleted: newLineItem.deleted,
+                    name: newLineItem.name,
+                    user: newLineItem.user,
+                    type: newLineItem.type
+                }
             }
-        }
-    })
+        },
+    )
 
     const handleChange=(e: any)=> {
         const name = e.target.name;
-        const defaultValue = e.target.value;
+        const defaultValue = isNaN(e.target.value) ? e.target.value : +e.target.value;
         setNewLineItem((prevState:any)=>({
             ...prevState,
             [name]:defaultValue,
             })
         )
+        console.log(newLineItem)
+    }
+
+    const submitNewLineItem =()=>{
+        createLineItem()
+        setNewItemDisplayed(false)
+        setNewLineItem(initialState)
     }
 
     return (
@@ -84,7 +88,7 @@ const CREATE_NEW_LINE_ITEM = gql`
                 className="newItemInput"
                 name="amount"
                 placeholder="Budget Item Amount"
-                defaultValue={+newLineItem.amount}
+                defaultValue={newLineItem.amount}
                 onChange={handleChange}
                 />
                 <select
@@ -98,7 +102,7 @@ const CREATE_NEW_LINE_ITEM = gql`
             </div>
             <button
                 className=" display-block newItemButton"
-                onClick={()=>createLineItem()}>
+                onClick={()=>submitNewLineItem()}>
                 Submit
             </button>
             </div>

@@ -13,7 +13,7 @@ const Header =()=>{
             justify-content: space-between;
             align-items: center;
         `}>
-            <h2>our<span className={css`color: #29c7ac;`}>$</span>Money</h2>
+            <h2>our<span className="main">$</span>Money</h2>
             <Menu
             navDisplay={navDisplay}
             activateNavDisplay={activateNavDisplay}

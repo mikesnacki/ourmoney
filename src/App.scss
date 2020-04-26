@@ -2,7 +2,7 @@
   --border: rgba(0,0,0,.2);
   --shadow: #000;
   --heading: rgba(255,100,0,1);
-  --main: #1d8f13;
+  --main: #29c7ac;
   --text: #000;
   --textAlt: #fff;
   --inactive: rgba(0,0,0,.3);
@@ -94,6 +94,20 @@ button {
   border-color: transparent;
 }
 
+.main {
+  color: var(--main);
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; 
+}
+
+.space-around {
+  justify-content: space-around;;
+}
+
 .lines {
   width: 42px;
   height: 7px;
@@ -171,8 +185,6 @@ button {
 }
 
 .lineItem {
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
   max-width: 400px;
   margin:  1vh auto;
@@ -187,7 +199,7 @@ button {
 .item {
   background-color: transparent;
   border:  transparent;
-  width: 200px;
+  width: 150px;
   text-align: center;
 }
 
@@ -227,11 +239,16 @@ button {
 }
 
 .addItemButton{
-  background-color: transparent;
   color: var(--main);
-  border-radius: 50%;
   font-size: 2rem;
-  box-shadow: 1px 2px 6px 3px hsla(0, 0%,0%, 0.2);
+}
+
+.addItemButton:hover{
+  transform: scale(1.1);
+}
+
+.circle-radius {
+  border-radius: 50%;
 }
 
 .modal {
@@ -258,4 +275,10 @@ button {
 
 .display-block-false {
   display: none;
+}
+
+.editLineItem {
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-end;
 }

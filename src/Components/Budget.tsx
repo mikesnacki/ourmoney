@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Loading from "./Loading";
 import { css } from "emotion";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import ILineItem from "../Interfaces/ILineItem";
 import LineItem from "./LineItem";
 import CreateBudgetItem from "./CreateBudgetItem";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
 
 const Budget =()=> {
 
@@ -14,27 +15,9 @@ const Budget =()=> {
 
     const [newItemDisplayed, setNewItemDisplayed] = useState<boolean>(false)
 
-    const GET_USER_DATA = gql`
-                query getUserData($user: ID!) {
-                        users(where:{id: $user})
-                        {
-                        id
-                        name
-                        email
-                        lineItems(orderBy: type_DESC) {
-                            id
-                            name
-                            amount
-                            type
-                            deleted
-                        }
-                    }
-                }
-            `
-
     const { loading, error, data } = useQuery(GET_USER_DATA, {
         variables: {user: user},
-        pollInterval: 300,
+        pollInterval: 500,
     });
 
     if (loading) {return <Loading/> }
@@ -66,7 +49,7 @@ const Budget =()=> {
             `}
             onClick={()=>setNewItemDisplayed(!newItemDisplayed)}
         >
-            <FontAwesomeIcon className="addItemButton" icon={faPlusCircle} />
+            <FontAwesomeIcon className="addItemButton circle-radius" icon={faPlusCircle} />
         </button>
         </div>
     )
