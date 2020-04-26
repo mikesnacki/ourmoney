@@ -9,7 +9,7 @@ const Header =()=>{
         <header className={css`
             display: flex;
             flex-direction: row;
-            margin: auto 4vw;
+            margin: auto 3vw;
             justify-content: space-between;
             align-items: center;
         `}>

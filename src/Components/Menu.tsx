@@ -31,6 +31,7 @@ const Menu =(Props: DisplayProps)=>{
             right: 3vw;
             top: 3vh;
             padding: 0;
+            overflow: hidden;
             `}
             onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}
             >

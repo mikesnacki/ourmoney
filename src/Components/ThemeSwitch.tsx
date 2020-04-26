@@ -36,14 +36,16 @@ const ThemeSwitch =()=>{
     
     return (
     <label 
-        className={css`position: fixed;
+        className={css`
+        position: fixed;
         bottom: 5vh;
         left: 2vw;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 50px;
-        height: 30px;`}>
+        height: 30px;
+        `}>
         <button
             className={css`
             background-color: transparent;

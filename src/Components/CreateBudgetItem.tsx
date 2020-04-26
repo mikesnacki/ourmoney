@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
 import { useMutation, gql } from "@apollo/client"
 import  ILineItem from "../Interfaces/ILineItem"
+import  ICreateItem from "../Interfaces/ICreateItem"
+import { css } from "emotion"
 
-const CreateBudgetItem = ()=> {
+const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}:ICreateItem)=> {
 const user:string = "ck9e8smlh000s07914dw7ff5w"
 
 const CREATE_NEW_LINE_ITEM = gql`
-mutation createLineItem($data: LineItemCreateInput!){
-    createLineItem(data: $data)
-    {
-      name
-      amount
-      type
+    mutation createLineItem($data: LineItemCreateInput!){
+        createLineItem(data: $data)
+        {
+        name
+        amount
+        type
+        }
     }
-  }
-`
-
+    `
     const [newLineItem, setNewLineItem] = useState<ILineItem>({
                                             type: "INCOME",
                                             amount: 0,
@@ -44,17 +45,38 @@ mutation createLineItem($data: LineItemCreateInput!){
             [name]:defaultValue,
             })
         )
-
-        console.log(newLineItem)
     }
 
     return (
-        <div>
-            <h2>New Budget Item</h2>
+        <div className={`modal display-block-${newItemDisplayed}`}>
+            <div className={css`
+            margin: 30vh auto; 
+            display: flex; 
+            flex-direction: row; 
+            flex-wrap: wrap;
+            max-width: 450px;
+            box-shadow: 1px 2px 2px 2px hsla(0, 0%,0%, 0.2);
+            border-radius: 5px;`
+            }>
+            <h2 className={css`
+            align-items: center;
+            margin: auto;
+            `}>New Budget Item</h2>
+            <button
+            className="modal-button-close"
+            onClick={()=>setNewItemDisplayed(false)}
+            >×</button>
+            <div className={css`
+                margin: auto; 
+                display: flex; 
+                flex-direction: row; 
+                flex-wrap: wrap;
+                justify-content: center;
+            `}>
                 <input
                 className="newItemInput"
                 name="name"
-                placeholder="Budget Item Name"
+                placeholder="Budget Item"
                 defaultValue={newLineItem.name}
                 onChange={handleChange}
                 ></input>
@@ -66,15 +88,20 @@ mutation createLineItem($data: LineItemCreateInput!){
                 onChange={handleChange}
                 />
                 <select
+                className="newItemInput"
                 onChange={handleChange}
                 >
                     <option value="INCOME">Income</option>
                     <option value="EXPENSE">Expense</option>
                 </select>
+
+            </div>
             <button
+                className=" display-block newItemButton"
                 onClick={()=>createLineItem()}>
                 Submit
             </button>
+            </div>
         </div>
     )
 }

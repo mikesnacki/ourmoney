@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from "emotion"
 import ILineItem from "../Interfaces/ILineItem"
 
-const LineItem =({lineItem} :{lineItem: ILineItem})=> {
+const LineItem =({lineItem } :{lineItem: ILineItem})=> {
 
     const currFormat = new Intl.NumberFormat("en-US", {
         style:"currency",
@@ -15,8 +15,8 @@ const LineItem =({lineItem} :{lineItem: ILineItem})=> {
         <div 
         onClick={()=>console.log(lineItem.id)}
         className="lineItem">
-            <p className={css`text-transform: capitalize;`}>{lineItem.name}</p>
-            <p>{lineItem.amount !== undefined && currFormat.format(lineItem.amount)}</p>
+            <input className="item capitalize text-start" defaultValue={lineItem.name}/>
+            <input className="item text-end" defaultValue={currFormat.format(lineItem.amount)}/>
         </div>
     )
 }
