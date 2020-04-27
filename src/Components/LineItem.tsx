@@ -81,7 +81,7 @@ const LineItem =({lineItem } :{lineItem: LineItemProps})=> {
                 />
                 </div>
             </div>
-            {editMode && !lineItem.name.includes("Total") &&
+            {editMode && !lineItem.name.includes("Total") && lineItem.id &&
                 <div className="flex-row space-around">
                     <FontAwesomeIcon onClick={()=>updateLineItem()} className="addItemButton changesItemButton" icon={faExchangeAlt} />
                     <FontAwesomeIcon onClick={()=> deleteLineItem()} className="addItemButton changesItemButton" icon={faTrash}/>

@@ -32,33 +32,34 @@ a {
 }
 
 h1, .user-project-header{
-  font-size: calc(32px - 0.3vw);
+  font-size: calc(26 - 0.3vw);
 }
 
 h2, .story-name , .nav-links{
-  font-size: calc(30px - 0.3vw);
+  font-size: calc(25px - 0.3vw);
 }
 
 h3{
-  font-size: calc(29px - 0.3vw);
+  font-size: calc(24px - 0.3vw);
 }
 
 h4, textarea{
-  font-size: calc(28px - 0.3vw);
+  font-size: calc(23px - 0.3vw);
 }
 
 h5{
-  font-size: calc(27px - 0.3vw);
+  font-size: calc(22px - 0.3vw);
 }
 
 h6{
-  font-size: calc(26px - 0.3vw);
+  font-size: calc(21px - 0.3vw);
 }
 
 p, a, input, select{
-  font-size: calc(25px - 0.3vw);
+  font-size: calc(20px - 0.3vw);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
+  text-overflow: ellipsis;
 }
 
 .icon { 

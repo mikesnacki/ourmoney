@@ -42,6 +42,12 @@ const Budget =()=> {
         amount: calculateLineItem(userBudget, "type", "EXPENSE", "amount"),
     }
 
+    const userNetIncome: LineItemProps = {
+        name: "Total Net Income",
+        type: "INCOME",
+        amount: userIncomesObject.amount - userExpensesObject.amount,
+    }
+
 
     return(
         <div className={css`
@@ -69,9 +75,14 @@ const Budget =()=> {
                     />
                 ))
             }
-                        {
+            {
                 <LineItem
                     lineItem={userExpensesObject}
+                />
+            }
+            {
+                <LineItem
+                    lineItem={userNetIncome}
                 />
             }
         <CreateBudgetItem
