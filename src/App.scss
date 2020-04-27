@@ -105,7 +105,7 @@ button {
 }
 
 .space-around {
-  justify-content: space-around;;
+  justify-content: space-around;
 }
 
 .lines {
@@ -281,4 +281,8 @@ button {
   flex-basis: 100%;
   align-items: center;
   justify-content: flex-end;
+}
+
+.changesItemButton-false {
+  color: transparent;
 }

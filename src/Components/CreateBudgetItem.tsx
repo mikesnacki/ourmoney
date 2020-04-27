@@ -91,6 +91,7 @@ const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemPr
                 onChange={handleChange}
                 />
                 <select
+                name="type"
                 className="newItemInput"
                 onChange={handleChange}
                 >

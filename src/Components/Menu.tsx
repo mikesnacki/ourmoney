@@ -26,7 +26,7 @@ const Menu =(Props: DisplayProps)=>{
             width: 50px;
             display:flex;
             flex-direction: column; 
-            justify-content: center
+            justify-content: center;
             z-index: 2;
             right: 3vw;
             top: 3vh;

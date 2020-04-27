@@ -22,7 +22,7 @@ type LineItem {
   name: String!
   amount: Float!
   type: LineItemType!
-  deleted: Boolean!
+  deleted: Boolean
   user: User!
 }
 
@@ -37,7 +37,7 @@ input LineItemCreateInput {
   name: String!
   amount: Float!
   type: LineItemType!
-  deleted: Boolean!
+  deleted: Boolean
   user: UserCreateOneWithoutLineItemsInput!
 }
 
@@ -51,7 +51,7 @@ input LineItemCreateWithoutUserInput {
   name: String!
   amount: Float!
   type: LineItemType!
-  deleted: Boolean!
+  deleted: Boolean
 }
 
 type LineItemEdge {
@@ -80,7 +80,7 @@ type LineItemPreviousValues {
   name: String!
   amount: Float!
   type: LineItemType!
-  deleted: Boolean!
+  deleted: Boolean
 }
 
 input LineItemScalarWhereInput {

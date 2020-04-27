@@ -6,7 +6,7 @@ const GET_USER_DATA = gql`
                     id
                     name
                     email
-                    lineItems(orderBy: type_DESC) {
+                    lineItems(orderBy: amount_DESC) {
                         id
                         name
                         amount

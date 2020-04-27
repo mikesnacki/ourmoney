@@ -275,7 +275,7 @@ export interface LineItemCreateInput {
   name: String;
   amount: Float;
   type: LineItemType;
-  deleted: Boolean;
+  deleted?: Maybe<Boolean>;
   user: UserCreateOneWithoutLineItemsInput;
 }
 
@@ -363,7 +363,7 @@ export interface LineItemCreateWithoutUserInput {
   name: String;
   amount: Float;
   type: LineItemType;
-  deleted: Boolean;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -588,7 +588,7 @@ export interface LineItem {
   name: String;
   amount: Float;
   type: LineItemType;
-  deleted: Boolean;
+  deleted?: Boolean;
 }
 
 export interface LineItemPromise extends Promise<LineItem>, Fragmentable {
@@ -689,7 +689,7 @@ export interface LineItemPreviousValues {
   name: String;
   amount: Float;
   type: LineItemType;
-  deleted: Boolean;
+  deleted?: Boolean;
 }
 
 export interface LineItemPreviousValuesPromise

@@ -8,8 +8,8 @@ type LineItem {
   createdAt: DateTime! @createdAt
   name: String!
   amount: Float!
-  type: LineItemType!
-  deleted: Boolean!
+  type: String!
+  deleted: Boolean
   user: User!
 }
 
