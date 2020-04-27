@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { useMutation } from "@apollo/client"
-import  ILineItem from "../Interfaces/ILineItem"
-import  ICreateItem from "../Interfaces/ICreateItem"
+import  LineItemProps from "../Interfaces/LineItemProps"
+import  CreateItemProps from "../Interfaces/CreateItemProps"
 import { css } from "emotion"
 import CREATE_NEW_LINE_ITEM from "../Executables/Mutations/CREATE_NEW_LINE_ITEM"
 
-
-const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}:ICreateItem)=> {
-const user:string = "ck9e8smlh000s07914dw7ff5w"
+const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemProps)=> {
+    const user:string = "ck9e8smlh000s07914dw7ff5w"
 
     const initialState = {
         type: "INCOME",
@@ -17,38 +16,38 @@ const user:string = "ck9e8smlh000s07914dw7ff5w"
         user: {connect:{id:user}}
     }
 
-    const [newLineItem, setNewLineItem] = useState<ILineItem>(initialState)
+    const [newLineItem, setNewLineItem] = useState<LineItemProps>(initialState)
 
-    const [createLineItem, {error, data}] = useMutation<{data: ILineItem}>(
+    const [ createLineItem ] = useMutation<{data: LineItemProps}>(
         CREATE_NEW_LINE_ITEM, 
         {
             variables: {
-                data: { 
-                    amount: +newLineItem.amount, 
-                    deleted: newLineItem.deleted,
+                data: {
+                    type: newLineItem.type, 
+                    amount: newLineItem.amount, 
                     name: newLineItem.name,
                     user: newLineItem.user,
-                    type: newLineItem.type
                 }
             }
-        },
+        }
     )
 
     const handleChange=(e: any)=> {
         const name = e.target.name;
-        const defaultValue = isNaN(e.target.value) ? e.target.value : +e.target.value;
+        const defaultValue = isNaN(e.target.value) 
+        ? e.target.value 
+        : +e.target.value;
         setNewLineItem((prevState:any)=>({
             ...prevState,
             [name]:defaultValue,
             })
         )
-        console.log(newLineItem)
     }
 
     const submitNewLineItem =()=>{
         createLineItem()
-        setNewItemDisplayed(false)
         setNewLineItem(initialState)
+        setNewItemDisplayed(false)
     }
 
     return (

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Loading from "./Loading";
 import { css } from "emotion";
 import { useQuery } from "@apollo/client";
-import ILineItem from "../Interfaces/ILineItem";
+import ILineItem from "../Interfaces/LineItemProps";
 import LineItem from "./LineItem";
 import CreateBudgetItem from "./CreateBudgetItem";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
