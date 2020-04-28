@@ -22,7 +22,9 @@ const Budget = React.lazy(()=>import("./Components/Budget"))
 // };
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    dataIdFromObject: o => o.id ? `${o.__typename}-${o.id}` : `${o.__typename}-${o.cursor}`,
+  }),
   link: new HttpLink({
     uri: "http://192.168.99.100:4466/"
   })

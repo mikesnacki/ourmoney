@@ -48,9 +48,9 @@ const LineItem =({lineItem } :{lineItem: LineItemProps})=> {
         }
     )
 
-    const handleChange=(e: any)=> {
-        const name = e.target.name;
-        const defaultValue = e.target.value.toString().replace("$", '')
+    const handleChange=(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>)=> {
+        const name: string = e.target.name;
+        const defaultValue: string = e.target.value.toString().replace("$", '')
         setItem((prevState:any)=>({
             ...prevState,
             [name]:defaultValue,

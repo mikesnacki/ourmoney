@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useMutation } from "@apollo/client"
 import  LineItemProps from "../Interfaces/LineItemProps"
 import  CreateItemProps from "../Interfaces/CreateItemProps"
+import DataProps from "../Interfaces/UserProps"
 import { css } from "emotion"
 import CREATE_NEW_LINE_ITEM from "../Executables/Mutations/CREATE_NEW_LINE_ITEM"
+import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
 
 const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemProps)=> {
     const user:string = "ck9e8smlh000s07914dw7ff5w"
@@ -18,25 +20,23 @@ const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemPr
 
     const [newLineItem, setNewLineItem] = useState<LineItemProps>(initialState)
 
-    const [ createLineItem ] = useMutation<{data: LineItemProps}>(
+    const [ createLineItem ] = useMutation(
         CREATE_NEW_LINE_ITEM, 
         {
-            variables: {
-                data: {
-                    type: newLineItem.type, 
-                    amount: newLineItem.amount, 
-                    name: newLineItem.name,
-                    user: newLineItem.user,
-                }
+            update(cache, { data: { createLineItem } }) {
+                let lineItems: any
+                lineItems = cache.readQuery<DataProps[]>({ query: GET_USER_DATA });
+                cache.writeQuery({
+                query: GET_USER_DATA,
+                data: { lineItems: lineItems.concat([createLineItem])},
+              });
             }
         }
     )
 
-    const handleChange=(e: any)=> {
-        const name = e.target.name;
-        const defaultValue = isNaN(e.target.value) 
-        ? e.target.value 
-        : +e.target.value;
+    const handleChange=(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>)=> {
+        const name: string = e.target.name;
+        const defaultValue: string  = e.target.value 
         setNewLineItem((prevState:any)=>({
             ...prevState,
             [name]:defaultValue,
@@ -45,7 +45,14 @@ const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemPr
     }
 
     const submitNewLineItem =()=>{
-        createLineItem()
+        createLineItem({variables: {
+            data: {
+                type: newLineItem.type, 
+                amount: +newLineItem.amount, 
+                name: newLineItem.name,
+                user: newLineItem.user,
+            }
+        }})
         setNewLineItem(initialState)
         setNewItemDisplayed(false)
     }
@@ -94,6 +101,7 @@ const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemPr
                 name="type"
                 className="newItemInput"
                 onChange={handleChange}
+                defaultValue={newLineItem.amount}
                 >
                     <option value="INCOME">Income</option>
                     <option value="EXPENSE">Expense</option>
