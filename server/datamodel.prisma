@@ -15,8 +15,7 @@ type LineItem {
 
 type User {
   id: ID! @id
-  name: String!
-  email: String!
+  email: String! @unique
   relatedUser: User @relation(link: INLINE)
   lineItems: [LineItem]
 }

@@ -45,12 +45,20 @@ const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemPr
     }
 
     const submitNewLineItem =()=>{
+        // createLineItem({variables: {
+        //     data: {
+        //         type: newLineItem.type, 
+        //         amount: +newLineItem.amount, 
+        //         name: newLineItem.name,
+        //         user: newLineItem.user,
+        //     }
+        // }})
         createLineItem({variables: {
             data: {
                 type: newLineItem.type, 
                 amount: +newLineItem.amount, 
                 name: newLineItem.name,
-                user: newLineItem.user,
+                user: {create: { email: "mikesnacki@gmail.com"}},
             }
         }})
         setNewLineItem(initialState)

@@ -1,12 +1,11 @@
 import { gql } from "@apollo/client";
 
 const GET_USER_DATA = gql`
-            query getUserData($user: ID!) {
-                    users(where:{id: $user}) {
+            query getUserData($user: String!) {
+                    users(where:{email: $user}) {
                     id
-                    name
                     email
-                    lineItems {
+                    lineItems{
                         id
                         name
                         amount

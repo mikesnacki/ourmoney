@@ -21,7 +21,7 @@ type LineItem {
   createdAt: DateTime!
   name: String!
   amount: Float!
-  type: LineItemType!
+  type: String!
   deleted: Boolean
   user: User!
 }
@@ -36,7 +36,7 @@ input LineItemCreateInput {
   id: ID
   name: String!
   amount: Float!
-  type: LineItemType!
+  type: String!
   deleted: Boolean
   user: UserCreateOneWithoutLineItemsInput!
 }
@@ -50,7 +50,7 @@ input LineItemCreateWithoutUserInput {
   id: ID
   name: String!
   amount: Float!
-  type: LineItemType!
+  type: String!
   deleted: Boolean
 }
 
@@ -79,7 +79,7 @@ type LineItemPreviousValues {
   createdAt: DateTime!
   name: String!
   amount: Float!
-  type: LineItemType!
+  type: String!
   deleted: Boolean
 }
 
@@ -128,10 +128,20 @@ input LineItemScalarWhereInput {
   amount_lte: Float
   amount_gt: Float
   amount_gte: Float
-  type: LineItemType
-  type_not: LineItemType
-  type_in: [LineItemType!]
-  type_not_in: [LineItemType!]
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
   deleted: Boolean
   deleted_not: Boolean
   AND: [LineItemScalarWhereInput!]
@@ -157,15 +167,10 @@ input LineItemSubscriptionWhereInput {
   NOT: [LineItemSubscriptionWhereInput!]
 }
 
-enum LineItemType {
-  INCOME
-  EXPENSE
-}
-
 input LineItemUpdateInput {
   name: String
   amount: Float
-  type: LineItemType
+  type: String
   deleted: Boolean
   user: UserUpdateOneRequiredWithoutLineItemsInput
 }
@@ -173,14 +178,14 @@ input LineItemUpdateInput {
 input LineItemUpdateManyDataInput {
   name: String
   amount: Float
-  type: LineItemType
+  type: String
   deleted: Boolean
 }
 
 input LineItemUpdateManyMutationInput {
   name: String
   amount: Float
-  type: LineItemType
+  type: String
   deleted: Boolean
 }
 
@@ -204,7 +209,7 @@ input LineItemUpdateManyWithWhereNestedInput {
 input LineItemUpdateWithoutUserDataInput {
   name: String
   amount: Float
-  type: LineItemType
+  type: String
   deleted: Boolean
 }
 
@@ -264,10 +269,20 @@ input LineItemWhereInput {
   amount_lte: Float
   amount_gt: Float
   amount_gte: Float
-  type: LineItemType
-  type_not: LineItemType
-  type_in: [LineItemType!]
-  type_not_in: [LineItemType!]
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
   deleted: Boolean
   deleted_not: Boolean
   user: UserWhereInput
@@ -331,7 +346,6 @@ type Subscription {
 
 type User {
   id: ID!
-  name: String!
   email: String!
   relatedUser: User
   lineItems(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LineItem!]
@@ -345,7 +359,6 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
-  name: String!
   email: String!
   relatedUser: UserCreateOneInput
   lineItems: LineItemCreateManyWithoutUserInput
@@ -363,7 +376,6 @@ input UserCreateOneWithoutLineItemsInput {
 
 input UserCreateWithoutLineItemsInput {
   id: ID
-  name: String!
   email: String!
   relatedUser: UserCreateOneInput
 }
@@ -376,15 +388,12 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
   email_ASC
   email_DESC
 }
 
 type UserPreviousValues {
   id: ID!
-  name: String!
   email: String!
 }
 
@@ -407,21 +416,18 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
-  name: String
   email: String
   relatedUser: UserUpdateOneInput
   lineItems: LineItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
-  name: String
   email: String
   relatedUser: UserUpdateOneInput
   lineItems: LineItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
-  name: String
   email: String
 }
 
@@ -442,7 +448,6 @@ input UserUpdateOneRequiredWithoutLineItemsInput {
 }
 
 input UserUpdateWithoutLineItemsDataInput {
-  name: String
   email: String
   relatedUser: UserUpdateOneInput
 }
@@ -472,20 +477,6 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]
@@ -511,5 +502,6 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }
 `

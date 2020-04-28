@@ -29,16 +29,16 @@ const ThemeSwitch =()=>{
                 color: ${checked.svgColor};
                 -webkit-transition: .4s;
                 transition: .4s;
-                -webkit-transform: translateX(${checked.travel});
-                -ms-transform: translateX(${checked.travel});
-                transform: translateX(${checked.travel});
+                -webkit-transform: translateY(${checked.travel});
+                -ms-transform: translateY(${checked.travel});
+                transform: translateY(${checked.travel});
                 `   
     
     return (
     <label 
         className={css`
         position: fixed;
-        bottom: 5vh;
+        bottom: 10vh;
         left: 2vw;
         display: flex;
         align-items: center;
@@ -62,8 +62,8 @@ const ThemeSwitch =()=>{
             bottom: 0;
             background-color: ${checked.backgroundColor};
             border-radius: 20px;
-            height: 48px;
-            width: 80px;
+            height: 80px;
+            width: 48px;
             box-shadow: 1px 2px 6px 2px hsla(0, 0%,0%, 0.2);
         `}
         ></span>

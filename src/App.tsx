@@ -6,20 +6,21 @@ import {ThemeProvider} from "./Context/ThemeContext"
 import history from "./Utils/history"
 import { Router, Route, Switch } from "react-router-dom";
 import Loading from "./Components/Loading"
-// import {Auth0Provider} from "./Hooks/useAuth"
-// import config from "./auth_config.json";
+import {Auth0Provider} from "./Hooks/useAuth"
+import config from "./auth_config.json";
+import PrivateRoute from "./Components/PrivateRoute"
 import { ApolloProvider, ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
 
 const Home = React.lazy(()=>import("./Components/Home"))
 const Budget = React.lazy(()=>import("./Components/Budget"))
 
-// const onRedirectCallback = (appState: any) => {
-//   history.push(
-//     appState && appState.targetUrl
-//       ? appState.targetUrl
-//       : window.location.pathname
-//   );
-// };
+const onRedirectCallback = (appState: any) => {
+  history.push(
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  );
+};
 
 const client = new ApolloClient({
   cache: new InMemoryCache({
@@ -33,11 +34,11 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    // <Auth0Provider
-    //   domain={config.domain}
-    //   client_id={config.clientId}
-    //   redirect_uri={window.location.origin}
-    //   onRedirectCallback={()=>onRedirectCallback}>
+    <Auth0Provider
+      domain={config.domain}
+      client_id={config.clientId}
+      redirect_uri={window.location.origin}
+      onRedirectCallback={()=>onRedirectCallback}>
       <ApolloProvider client={client}>
         <ThemeProvider>
           <Router history={history}>
@@ -45,14 +46,14 @@ function App() {
             <Header/>
             <Switch>
             <Route path="/" exact component={Home}/>
-            <Route path="/budget" component={Budget}/>
+            <PrivateRoute path="/budget" component={Budget}/>
             </Switch>
           </Suspense>
           </Router>
           <ThemeSwitch/>
         </ThemeProvider>
       </ApolloProvider>
-    // </Auth0Provider>
+    </Auth0Provider>
   );
 }
 

@@ -140,8 +140,6 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type LineItemType = "INCOME" | "EXPENSE";
-
 export type LineItemOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -159,8 +157,6 @@ export type LineItemOrderByInput =
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
   | "email_ASC"
   | "email_DESC";
 
@@ -258,10 +254,20 @@ export interface LineItemWhereInput {
   amount_lte?: Maybe<Float>;
   amount_gt?: Maybe<Float>;
   amount_gte?: Maybe<Float>;
-  type?: Maybe<LineItemType>;
-  type_not?: Maybe<LineItemType>;
-  type_in?: Maybe<LineItemType[] | LineItemType>;
-  type_not_in?: Maybe<LineItemType[] | LineItemType>;
+  type?: Maybe<String>;
+  type_not?: Maybe<String>;
+  type_in?: Maybe<String[] | String>;
+  type_not_in?: Maybe<String[] | String>;
+  type_lt?: Maybe<String>;
+  type_lte?: Maybe<String>;
+  type_gt?: Maybe<String>;
+  type_gte?: Maybe<String>;
+  type_contains?: Maybe<String>;
+  type_not_contains?: Maybe<String>;
+  type_starts_with?: Maybe<String>;
+  type_not_starts_with?: Maybe<String>;
+  type_ends_with?: Maybe<String>;
+  type_not_ends_with?: Maybe<String>;
   deleted?: Maybe<Boolean>;
   deleted_not?: Maybe<Boolean>;
   user?: Maybe<UserWhereInput>;
@@ -274,7 +280,7 @@ export interface LineItemCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   amount: Float;
-  type: LineItemType;
+  type: String;
   deleted?: Maybe<Boolean>;
   user: UserCreateOneWithoutLineItemsInput;
 }
@@ -300,7 +306,6 @@ export interface UserCreateOneWithoutLineItemsInput {
 }
 
 export interface UserUpdateInput {
-  name?: Maybe<String>;
   email?: Maybe<String>;
   relatedUser?: Maybe<UserUpdateOneInput>;
   lineItems?: Maybe<LineItemUpdateManyWithoutUserInput>;
@@ -308,7 +313,6 @@ export interface UserUpdateInput {
 
 export interface UserCreateWithoutLineItemsInput {
   id?: Maybe<ID_Input>;
-  name: String;
   email: String;
   relatedUser?: Maybe<UserCreateOneInput>;
 }
@@ -325,11 +329,11 @@ export interface UserCreateOneInput {
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  email?: Maybe<String>;
 }>;
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
   email: String;
   relatedUser?: Maybe<UserCreateOneInput>;
   lineItems?: Maybe<LineItemCreateManyWithoutUserInput>;
@@ -343,7 +347,7 @@ export interface LineItemUpdateManyWithWhereNestedInput {
 export interface LineItemUpdateWithoutUserDataInput {
   name?: Maybe<String>;
   amount?: Maybe<Float>;
-  type?: Maybe<LineItemType>;
+  type?: Maybe<String>;
   deleted?: Maybe<Boolean>;
 }
 
@@ -362,19 +366,18 @@ export interface LineItemCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
   name: String;
   amount: Float;
-  type: LineItemType;
+  type: String;
   deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
   email?: Maybe<String>;
 }
 
 export interface LineItemUpdateInput {
   name?: Maybe<String>;
   amount?: Maybe<Float>;
-  type?: Maybe<LineItemType>;
+  type?: Maybe<String>;
   deleted?: Maybe<Boolean>;
   user?: Maybe<UserUpdateOneRequiredWithoutLineItemsInput>;
 }
@@ -385,7 +388,6 @@ export interface UserUpsertNestedInput {
 }
 
 export interface UserUpdateDataInput {
-  name?: Maybe<String>;
   email?: Maybe<String>;
   relatedUser?: Maybe<UserUpdateOneInput>;
   lineItems?: Maybe<LineItemUpdateManyWithoutUserInput>;
@@ -401,7 +403,6 @@ export interface UserUpdateOneInput {
 }
 
 export interface UserUpdateWithoutLineItemsDataInput {
-  name?: Maybe<String>;
   email?: Maybe<String>;
   relatedUser?: Maybe<UserUpdateOneInput>;
 }
@@ -414,14 +415,14 @@ export interface LineItemUpdateWithWhereUniqueWithoutUserInput {
 export interface LineItemUpdateManyDataInput {
   name?: Maybe<String>;
   amount?: Maybe<Float>;
-  type?: Maybe<LineItemType>;
+  type?: Maybe<String>;
   deleted?: Maybe<Boolean>;
 }
 
 export interface LineItemUpdateManyMutationInput {
   name?: Maybe<String>;
   amount?: Maybe<Float>;
-  type?: Maybe<LineItemType>;
+  type?: Maybe<String>;
   deleted?: Maybe<Boolean>;
 }
 
@@ -440,20 +441,6 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
   email_not?: Maybe<String>;
   email_in?: Maybe<String[] | String>;
@@ -522,10 +509,20 @@ export interface LineItemScalarWhereInput {
   amount_lte?: Maybe<Float>;
   amount_gt?: Maybe<Float>;
   amount_gte?: Maybe<Float>;
-  type?: Maybe<LineItemType>;
-  type_not?: Maybe<LineItemType>;
-  type_in?: Maybe<LineItemType[] | LineItemType>;
-  type_not_in?: Maybe<LineItemType[] | LineItemType>;
+  type?: Maybe<String>;
+  type_not?: Maybe<String>;
+  type_in?: Maybe<String[] | String>;
+  type_not_in?: Maybe<String[] | String>;
+  type_lt?: Maybe<String>;
+  type_lte?: Maybe<String>;
+  type_gt?: Maybe<String>;
+  type_gte?: Maybe<String>;
+  type_contains?: Maybe<String>;
+  type_not_contains?: Maybe<String>;
+  type_starts_with?: Maybe<String>;
+  type_not_starts_with?: Maybe<String>;
+  type_ends_with?: Maybe<String>;
+  type_not_ends_with?: Maybe<String>;
   deleted?: Maybe<Boolean>;
   deleted_not?: Maybe<Boolean>;
   AND?: Maybe<LineItemScalarWhereInput[] | LineItemScalarWhereInput>;
@@ -539,7 +536,6 @@ export interface NodeNode {
 
 export interface UserPreviousValues {
   id: ID_Output;
-  name: String;
   email: String;
 }
 
@@ -547,7 +543,6 @@ export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
   email: () => Promise<String>;
 }
 
@@ -555,7 +550,6 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
 }
 
@@ -587,7 +581,7 @@ export interface LineItem {
   createdAt: DateTimeOutput;
   name: String;
   amount: Float;
-  type: LineItemType;
+  type: String;
   deleted?: Boolean;
 }
 
@@ -596,7 +590,7 @@ export interface LineItemPromise extends Promise<LineItem>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
   amount: () => Promise<Float>;
-  type: () => Promise<LineItemType>;
+  type: () => Promise<String>;
   deleted: () => Promise<Boolean>;
   user: <T = UserPromise>() => T;
 }
@@ -608,7 +602,7 @@ export interface LineItemSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   name: () => Promise<AsyncIterator<String>>;
   amount: () => Promise<AsyncIterator<Float>>;
-  type: () => Promise<AsyncIterator<LineItemType>>;
+  type: () => Promise<AsyncIterator<String>>;
   deleted: () => Promise<AsyncIterator<Boolean>>;
   user: <T = UserSubscription>() => T;
 }
@@ -620,7 +614,7 @@ export interface LineItemNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
   amount: () => Promise<Float>;
-  type: () => Promise<LineItemType>;
+  type: () => Promise<String>;
   deleted: () => Promise<Boolean>;
   user: <T = UserPromise>() => T;
 }
@@ -688,7 +682,7 @@ export interface LineItemPreviousValues {
   createdAt: DateTimeOutput;
   name: String;
   amount: Float;
-  type: LineItemType;
+  type: String;
   deleted?: Boolean;
 }
 
@@ -699,7 +693,7 @@ export interface LineItemPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
   amount: () => Promise<Float>;
-  type: () => Promise<LineItemType>;
+  type: () => Promise<String>;
   deleted: () => Promise<Boolean>;
 }
 
@@ -710,7 +704,7 @@ export interface LineItemPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   name: () => Promise<AsyncIterator<String>>;
   amount: () => Promise<AsyncIterator<Float>>;
-  type: () => Promise<AsyncIterator<LineItemType>>;
+  type: () => Promise<AsyncIterator<String>>;
   deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
@@ -737,13 +731,11 @@ export interface LineItemConnectionSubscription
 
 export interface User {
   id: ID_Output;
-  name: String;
   email: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
   email: () => Promise<String>;
   relatedUser: <T = UserPromise>() => T;
   lineItems: <T = FragmentableArray<LineItem>>(args?: {
@@ -761,7 +753,6 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   relatedUser: <T = UserSubscription>() => T;
   lineItems: <T = Promise<AsyncIterator<LineItemSubscription>>>(args?: {
@@ -779,7 +770,6 @@ export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
   email: () => Promise<String>;
   relatedUser: <T = UserPromise>() => T;
   lineItems: <T = FragmentableArray<LineItem>>(args?: {

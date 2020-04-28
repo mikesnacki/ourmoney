@@ -8,25 +8,27 @@ import CreateBudgetItem from "./CreateBudgetItem";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
+import { useAuth0 } from "../Hooks/useAuth"
 
-const calculateLineItem = (inputArray: Array<any>, param: any, type: string, sumField:string) => {
+const calculateLineItem = (inputArray: Array<any>, param: string, type: string, sumField:string) => {
     return inputArray.filter(inputItem=> inputItem[param] === type)
                      .reduce((sum, lineItem)=> sum + lineItem[sumField], 0)
 }
 
 const Budget =()=> {
 
-    const user:string = "ck9e8smlh000s07914dw7ff5w"
+    const { user } = useAuth0();
+
     const [newItemDisplayed, setNewItemDisplayed] = useState<boolean>(false)
 
     let userBudget: LineItemProps[] = []
 
     const { loading, error, data } = useQuery(GET_USER_DATA, {
-        variables: {user: user},
+        variables: {user: user.email},
         pollInterval: 500,
     });
 
-    if (loading) {return <Loading/> }
+    if (loading || !user ) {return <Loading/> }
     if (error) {return <p>Error</p>} 
 
     userBudget = data.users[0].lineItems
@@ -92,7 +94,7 @@ const Budget =()=> {
         <button
             className={css`
             position: fixed;
-            bottom: 5vh;
+            bottom: 8vh;
             right: 2vw;
             display: flex;
             align-items: center;
