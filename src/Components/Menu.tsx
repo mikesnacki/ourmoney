@@ -46,6 +46,7 @@ const Menu =(Props: DisplayProps)=>{
                     flex-direction: column; 
                     justify-content: center;
                     margin-top: 30vh;
+                    padding: 0;
                     `}>
                     {links}
                 </ul>

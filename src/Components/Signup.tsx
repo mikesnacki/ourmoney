@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation } from "@apollo/client"
 import { Link } from "react-router-dom"
+import { css } from "emotion"
 import NewUserProps from "../Interfaces/NewUserProps"
 import CREATE_NEW_USER from "../Executables/Mutations/CREATE_NEW_USER"
 import Loading from "../Components/Loading"
@@ -27,15 +28,18 @@ const SignUp =( { user } : { user: NewUserProps })=> {
     if (loading) return (<Loading/>)
 
     return (
-        <div>
+        <div className={css`
+        margin-top: 30vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        `}>
             {
-                !isSignedUp ?
-                <button onClick={()=> signUpUser()}>
-                    Click to sign up
-                </button>
-                :
-                <button>
-                    <Link key={2} className="nav-links" to="/budget">Our Budget</Link>
+                !isSignedUp &&
+                <button  
+                    className="newItemButton"
+                    onClick={()=> signUpUser()}>
+                    Click to Sign Up
                 </button>
             }
 
