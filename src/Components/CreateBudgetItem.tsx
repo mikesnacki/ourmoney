@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { useMutation } from "@apollo/client"
 import LineItemProps from "../Interfaces/LineItemProps"
 import CreateItemProps from "../Interfaces/CreateItemProps"
@@ -8,7 +8,7 @@ import CREATE_NEW_LINE_ITEM from "../Executables/Mutations/CREATE_NEW_LINE_ITEM"
 import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
 import Loading from "./Loading"
 
-const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed, userID }: CreateItemProps)=> {
+const CreateBudgetItem: FC<CreateItemProps> = ({newItemDisplayed , setNewItemDisplayed, userID })=> {
     const user = userID
 
     const initialState = {

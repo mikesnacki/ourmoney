@@ -6,6 +6,10 @@ export const typeDefs = /* GraphQL */ `type AggregateLineItem {
   count: Int!
 }
 
+type AggregateLinkedUser {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -295,6 +299,134 @@ input LineItemWhereUniqueInput {
   id: ID
 }
 
+type LinkedUser {
+  id: ID!
+  inviteSent: Boolean
+  inviteAccepted: Boolean
+  linkedUser: User
+}
+
+type LinkedUserConnection {
+  pageInfo: PageInfo!
+  edges: [LinkedUserEdge]!
+  aggregate: AggregateLinkedUser!
+}
+
+input LinkedUserCreateInput {
+  id: ID
+  inviteSent: Boolean
+  inviteAccepted: Boolean
+  linkedUser: UserCreateOneWithoutLinkedUserInput
+}
+
+input LinkedUserCreateOneWithoutLinkedUserInput {
+  create: LinkedUserCreateWithoutLinkedUserInput
+  connect: LinkedUserWhereUniqueInput
+}
+
+input LinkedUserCreateWithoutLinkedUserInput {
+  id: ID
+  inviteSent: Boolean
+  inviteAccepted: Boolean
+}
+
+type LinkedUserEdge {
+  node: LinkedUser!
+  cursor: String!
+}
+
+enum LinkedUserOrderByInput {
+  id_ASC
+  id_DESC
+  inviteSent_ASC
+  inviteSent_DESC
+  inviteAccepted_ASC
+  inviteAccepted_DESC
+}
+
+type LinkedUserPreviousValues {
+  id: ID!
+  inviteSent: Boolean
+  inviteAccepted: Boolean
+}
+
+type LinkedUserSubscriptionPayload {
+  mutation: MutationType!
+  node: LinkedUser
+  updatedFields: [String!]
+  previousValues: LinkedUserPreviousValues
+}
+
+input LinkedUserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LinkedUserWhereInput
+  AND: [LinkedUserSubscriptionWhereInput!]
+  OR: [LinkedUserSubscriptionWhereInput!]
+  NOT: [LinkedUserSubscriptionWhereInput!]
+}
+
+input LinkedUserUpdateInput {
+  inviteSent: Boolean
+  inviteAccepted: Boolean
+  linkedUser: UserUpdateOneWithoutLinkedUserInput
+}
+
+input LinkedUserUpdateManyMutationInput {
+  inviteSent: Boolean
+  inviteAccepted: Boolean
+}
+
+input LinkedUserUpdateOneWithoutLinkedUserInput {
+  create: LinkedUserCreateWithoutLinkedUserInput
+  update: LinkedUserUpdateWithoutLinkedUserDataInput
+  upsert: LinkedUserUpsertWithoutLinkedUserInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: LinkedUserWhereUniqueInput
+}
+
+input LinkedUserUpdateWithoutLinkedUserDataInput {
+  inviteSent: Boolean
+  inviteAccepted: Boolean
+}
+
+input LinkedUserUpsertWithoutLinkedUserInput {
+  update: LinkedUserUpdateWithoutLinkedUserDataInput!
+  create: LinkedUserCreateWithoutLinkedUserInput!
+}
+
+input LinkedUserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  inviteSent: Boolean
+  inviteSent_not: Boolean
+  inviteAccepted: Boolean
+  inviteAccepted_not: Boolean
+  linkedUser: UserWhereInput
+  AND: [LinkedUserWhereInput!]
+  OR: [LinkedUserWhereInput!]
+  NOT: [LinkedUserWhereInput!]
+}
+
+input LinkedUserWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
@@ -304,6 +436,12 @@ type Mutation {
   upsertLineItem(where: LineItemWhereUniqueInput!, create: LineItemCreateInput!, update: LineItemUpdateInput!): LineItem!
   deleteLineItem(where: LineItemWhereUniqueInput!): LineItem
   deleteManyLineItems(where: LineItemWhereInput): BatchPayload!
+  createLinkedUser(data: LinkedUserCreateInput!): LinkedUser!
+  updateLinkedUser(data: LinkedUserUpdateInput!, where: LinkedUserWhereUniqueInput!): LinkedUser
+  updateManyLinkedUsers(data: LinkedUserUpdateManyMutationInput!, where: LinkedUserWhereInput): BatchPayload!
+  upsertLinkedUser(where: LinkedUserWhereUniqueInput!, create: LinkedUserCreateInput!, update: LinkedUserUpdateInput!): LinkedUser!
+  deleteLinkedUser(where: LinkedUserWhereUniqueInput!): LinkedUser
+  deleteManyLinkedUsers(where: LinkedUserWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -333,6 +471,9 @@ type Query {
   lineItem(where: LineItemWhereUniqueInput!): LineItem
   lineItems(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LineItem]!
   lineItemsConnection(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LineItemConnection!
+  linkedUser(where: LinkedUserWhereUniqueInput!): LinkedUser
+  linkedUsers(where: LinkedUserWhereInput, orderBy: LinkedUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LinkedUser]!
+  linkedUsersConnection(where: LinkedUserWhereInput, orderBy: LinkedUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkedUserConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -341,13 +482,14 @@ type Query {
 
 type Subscription {
   lineItem(where: LineItemSubscriptionWhereInput): LineItemSubscriptionPayload
+  linkedUser(where: LinkedUserSubscriptionWhereInput): LinkedUserSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User {
   id: ID!
   email: String!
-  relatedUser: User
+  linkedUser: LinkedUser
   lineItems(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LineItem!]
 }
 
@@ -360,13 +502,8 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   email: String!
-  relatedUser: UserCreateOneInput
+  linkedUser: LinkedUserCreateOneWithoutLinkedUserInput
   lineItems: LineItemCreateManyWithoutUserInput
-}
-
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutLineItemsInput {
@@ -374,10 +511,21 @@ input UserCreateOneWithoutLineItemsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutLinkedUserInput {
+  create: UserCreateWithoutLinkedUserInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutLineItemsInput {
   id: ID
   email: String!
-  relatedUser: UserCreateOneInput
+  linkedUser: LinkedUserCreateOneWithoutLinkedUserInput
+}
+
+input UserCreateWithoutLinkedUserInput {
+  id: ID
+  email: String!
+  lineItems: LineItemCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -415,29 +563,14 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  email: String
-  relatedUser: UserUpdateOneInput
-  lineItems: LineItemUpdateManyWithoutUserInput
-}
-
 input UserUpdateInput {
   email: String
-  relatedUser: UserUpdateOneInput
+  linkedUser: LinkedUserUpdateOneWithoutLinkedUserInput
   lineItems: LineItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
-}
-
-input UserUpdateOneInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutLineItemsInput {
@@ -447,19 +580,33 @@ input UserUpdateOneRequiredWithoutLineItemsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutLineItemsDataInput {
-  email: String
-  relatedUser: UserUpdateOneInput
+input UserUpdateOneWithoutLinkedUserInput {
+  create: UserCreateWithoutLinkedUserInput
+  update: UserUpdateWithoutLinkedUserDataInput
+  upsert: UserUpsertWithoutLinkedUserInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutLineItemsDataInput {
+  email: String
+  linkedUser: LinkedUserUpdateOneWithoutLinkedUserInput
+}
+
+input UserUpdateWithoutLinkedUserDataInput {
+  email: String
+  lineItems: LineItemUpdateManyWithoutUserInput
 }
 
 input UserUpsertWithoutLineItemsInput {
   update: UserUpdateWithoutLineItemsDataInput!
   create: UserCreateWithoutLineItemsInput!
+}
+
+input UserUpsertWithoutLinkedUserInput {
+  update: UserUpdateWithoutLinkedUserDataInput!
+  create: UserCreateWithoutLinkedUserInput!
 }
 
 input UserWhereInput {
@@ -491,7 +638,7 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  relatedUser: UserWhereInput
+  linkedUser: LinkedUserWhereInput
   lineItems_every: LineItemWhereInput
   lineItems_some: LineItemWhereInput
   lineItems_none: LineItemWhereInput

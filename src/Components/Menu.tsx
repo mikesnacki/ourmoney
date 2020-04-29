@@ -2,11 +2,8 @@ import React from 'react'
 import { css } from 'emotion'
 import { Link } from "react-router-dom"
 import {useAuth0} from "../Hooks/useAuth"
+import DisplayProps from "../Interfaces/DisplayProps"
 
-type DisplayProps = {
-    navDisplay: boolean, 
-    activateNavDisplay: (navDisplay: boolean) => void
-}
 
 const Menu =(Props: DisplayProps)=>{
 

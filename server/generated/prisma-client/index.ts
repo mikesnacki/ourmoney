@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   lineItem: (where?: LineItemWhereInput) => Promise<boolean>;
+  linkedUser: (where?: LinkedUserWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -58,6 +59,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => LineItemConnectionPromise;
+  linkedUser: (where: LinkedUserWhereUniqueInput) => LinkedUserNullablePromise;
+  linkedUsers: (args?: {
+    where?: LinkedUserWhereInput;
+    orderBy?: LinkedUserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<LinkedUser>;
+  linkedUsersConnection: (args?: {
+    where?: LinkedUserWhereInput;
+    orderBy?: LinkedUserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => LinkedUserConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -99,6 +119,22 @@ export interface Prisma {
   }) => LineItemPromise;
   deleteLineItem: (where: LineItemWhereUniqueInput) => LineItemPromise;
   deleteManyLineItems: (where?: LineItemWhereInput) => BatchPayloadPromise;
+  createLinkedUser: (data: LinkedUserCreateInput) => LinkedUserPromise;
+  updateLinkedUser: (args: {
+    data: LinkedUserUpdateInput;
+    where: LinkedUserWhereUniqueInput;
+  }) => LinkedUserPromise;
+  updateManyLinkedUsers: (args: {
+    data: LinkedUserUpdateManyMutationInput;
+    where?: LinkedUserWhereInput;
+  }) => BatchPayloadPromise;
+  upsertLinkedUser: (args: {
+    where: LinkedUserWhereUniqueInput;
+    create: LinkedUserCreateInput;
+    update: LinkedUserUpdateInput;
+  }) => LinkedUserPromise;
+  deleteLinkedUser: (where: LinkedUserWhereUniqueInput) => LinkedUserPromise;
+  deleteManyLinkedUsers: (where?: LinkedUserWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -127,6 +163,9 @@ export interface Subscription {
   lineItem: (
     where?: LineItemSubscriptionWhereInput
   ) => LineItemSubscriptionPayloadSubscription;
+  linkedUser: (
+    where?: LinkedUserSubscriptionWhereInput
+  ) => LinkedUserSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -154,6 +193,14 @@ export type LineItemOrderByInput =
   | "deleted_ASC"
   | "deleted_DESC";
 
+export type LinkedUserOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "inviteSent_ASC"
+  | "inviteSent_DESC"
+  | "inviteAccepted_ASC"
+  | "inviteAccepted_DESC";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -162,22 +209,18 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface LineItemCreateManyWithoutUserInput {
-  create?: Maybe<
-    LineItemCreateWithoutUserInput[] | LineItemCreateWithoutUserInput
-  >;
-  connect?: Maybe<LineItemWhereUniqueInput[] | LineItemWhereUniqueInput>;
+export interface LinkedUserUpdateOneWithoutLinkedUserInput {
+  create?: Maybe<LinkedUserCreateWithoutLinkedUserInput>;
+  update?: Maybe<LinkedUserUpdateWithoutLinkedUserDataInput>;
+  upsert?: Maybe<LinkedUserUpsertWithoutLinkedUserInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<LinkedUserWhereUniqueInput>;
 }
 
 export type LineItemWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
-
-export interface LineItemUpsertWithWhereUniqueWithoutUserInput {
-  where: LineItemWhereUniqueInput;
-  update: LineItemUpdateWithoutUserDataInput;
-  create: LineItemCreateWithoutUserInput;
-}
 
 export interface LineItemUpdateManyWithoutUserInput {
   create?: Maybe<
@@ -202,11 +245,16 @@ export interface LineItemUpdateManyWithoutUserInput {
   >;
 }
 
-export interface UserUpdateOneRequiredWithoutLineItemsInput {
-  create?: Maybe<UserCreateWithoutLineItemsInput>;
-  update?: Maybe<UserUpdateWithoutLineItemsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLineItemsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface LineItemCreateManyWithoutUserInput {
+  create?: Maybe<
+    LineItemCreateWithoutUserInput[] | LineItemCreateWithoutUserInput
+  >;
+  connect?: Maybe<LineItemWhereUniqueInput[] | LineItemWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutLineItemsInput {
+  update: UserUpdateWithoutLineItemsDataInput;
+  create: UserCreateWithoutLineItemsInput;
 }
 
 export interface LineItemWhereInput {
@@ -285,6 +333,36 @@ export interface LineItemCreateInput {
   user: UserCreateOneWithoutLineItemsInput;
 }
 
+export interface LinkedUserWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  inviteSent?: Maybe<Boolean>;
+  inviteSent_not?: Maybe<Boolean>;
+  inviteAccepted?: Maybe<Boolean>;
+  inviteAccepted_not?: Maybe<Boolean>;
+  linkedUser?: Maybe<UserWhereInput>;
+  AND?: Maybe<LinkedUserWhereInput[] | LinkedUserWhereInput>;
+  OR?: Maybe<LinkedUserWhereInput[] | LinkedUserWhereInput>;
+  NOT?: Maybe<LinkedUserWhereInput[] | LinkedUserWhereInput>;
+}
+
+export interface UserCreateOneWithoutLineItemsInput {
+  create?: Maybe<UserCreateWithoutLineItemsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
 export interface LineItemSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -300,30 +378,56 @@ export interface LineItemSubscriptionWhereInput {
   >;
 }
 
-export interface UserCreateOneWithoutLineItemsInput {
-  create?: Maybe<UserCreateWithoutLineItemsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface UserCreateWithoutLineItemsInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  linkedUser?: Maybe<LinkedUserCreateOneWithoutLinkedUserInput>;
 }
 
 export interface UserUpdateInput {
   email?: Maybe<String>;
-  relatedUser?: Maybe<UserUpdateOneInput>;
+  linkedUser?: Maybe<LinkedUserUpdateOneWithoutLinkedUserInput>;
   lineItems?: Maybe<LineItemUpdateManyWithoutUserInput>;
 }
 
-export interface UserCreateWithoutLineItemsInput {
+export interface LinkedUserCreateOneWithoutLinkedUserInput {
+  create?: Maybe<LinkedUserCreateWithoutLinkedUserInput>;
+  connect?: Maybe<LinkedUserWhereUniqueInput>;
+}
+
+export interface LinkedUserUpdateManyMutationInput {
+  inviteSent?: Maybe<Boolean>;
+  inviteAccepted?: Maybe<Boolean>;
+}
+
+export interface LinkedUserCreateWithoutLinkedUserInput {
   id?: Maybe<ID_Input>;
-  email: String;
-  relatedUser?: Maybe<UserCreateOneInput>;
+  inviteSent?: Maybe<Boolean>;
+  inviteAccepted?: Maybe<Boolean>;
 }
 
-export interface UserUpsertWithoutLineItemsInput {
-  update: UserUpdateWithoutLineItemsDataInput;
-  create: UserCreateWithoutLineItemsInput;
+export interface UserUpsertWithoutLinkedUserInput {
+  update: UserUpdateWithoutLinkedUserDataInput;
+  create: UserCreateWithoutLinkedUserInput;
 }
 
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
+export interface LineItemUpdateInput {
+  name?: Maybe<String>;
+  amount?: Maybe<Float>;
+  type?: Maybe<String>;
+  deleted?: Maybe<Boolean>;
+  user?: Maybe<UserUpdateOneRequiredWithoutLineItemsInput>;
+}
+
+export interface LineItemUpdateManyWithWhereNestedInput {
+  where: LineItemScalarWhereInput;
+  data: LineItemUpdateManyDataInput;
+}
+
+export interface UserUpdateOneRequiredWithoutLineItemsInput {
+  create?: Maybe<UserCreateWithoutLineItemsInput>;
+  update?: Maybe<UserUpdateWithoutLineItemsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutLineItemsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
@@ -332,16 +436,9 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  relatedUser?: Maybe<UserCreateOneInput>;
-  lineItems?: Maybe<LineItemCreateManyWithoutUserInput>;
-}
-
-export interface LineItemUpdateManyWithWhereNestedInput {
-  where: LineItemScalarWhereInput;
-  data: LineItemUpdateManyDataInput;
+export interface UserUpdateWithoutLineItemsDataInput {
+  email?: Maybe<String>;
+  linkedUser?: Maybe<LinkedUserUpdateOneWithoutLinkedUserInput>;
 }
 
 export interface LineItemUpdateWithoutUserDataInput {
@@ -349,6 +446,11 @@ export interface LineItemUpdateWithoutUserDataInput {
   amount?: Maybe<Float>;
   type?: Maybe<String>;
   deleted?: Maybe<Boolean>;
+}
+
+export interface UserUpdateWithoutLinkedUserDataInput {
+  email?: Maybe<String>;
+  lineItems?: Maybe<LineItemUpdateManyWithoutUserInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -362,54 +464,47 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface LineItemCreateWithoutUserInput {
+export interface LinkedUserUpdateWithoutLinkedUserDataInput {
+  inviteSent?: Maybe<Boolean>;
+  inviteAccepted?: Maybe<Boolean>;
+}
+
+export interface LinkedUserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LinkedUserWhereInput>;
+  AND?: Maybe<
+    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
+  >;
+}
+
+export interface LinkedUserUpsertWithoutLinkedUserInput {
+  update: LinkedUserUpdateWithoutLinkedUserDataInput;
+  create: LinkedUserCreateWithoutLinkedUserInput;
+}
+
+export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
-  amount: Float;
-  type: String;
-  deleted?: Maybe<Boolean>;
+  email: String;
+  linkedUser?: Maybe<LinkedUserCreateOneWithoutLinkedUserInput>;
+  lineItems?: Maybe<LineItemCreateManyWithoutUserInput>;
 }
 
-export interface UserUpdateManyMutationInput {
-  email?: Maybe<String>;
-}
-
-export interface LineItemUpdateInput {
-  name?: Maybe<String>;
-  amount?: Maybe<Float>;
-  type?: Maybe<String>;
-  deleted?: Maybe<Boolean>;
-  user?: Maybe<UserUpdateOneRequiredWithoutLineItemsInput>;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface UserUpdateDataInput {
-  email?: Maybe<String>;
-  relatedUser?: Maybe<UserUpdateOneInput>;
-  lineItems?: Maybe<LineItemUpdateManyWithoutUserInput>;
-}
-
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
+export interface UserUpdateOneWithoutLinkedUserInput {
+  create?: Maybe<UserCreateWithoutLinkedUserInput>;
+  update?: Maybe<UserUpdateWithoutLinkedUserDataInput>;
+  upsert?: Maybe<UserUpsertWithoutLinkedUserInput>;
   delete?: Maybe<Boolean>;
   disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutLineItemsDataInput {
-  email?: Maybe<String>;
-  relatedUser?: Maybe<UserUpdateOneInput>;
-}
-
-export interface LineItemUpdateWithWhereUniqueWithoutUserInput {
-  where: LineItemWhereUniqueInput;
-  data: LineItemUpdateWithoutUserDataInput;
 }
 
 export interface LineItemUpdateManyDataInput {
@@ -424,6 +519,18 @@ export interface LineItemUpdateManyMutationInput {
   amount?: Maybe<Float>;
   type?: Maybe<String>;
   deleted?: Maybe<Boolean>;
+}
+
+export interface LineItemUpsertWithWhereUniqueWithoutUserInput {
+  where: LineItemWhereUniqueInput;
+  update: LineItemUpdateWithoutUserDataInput;
+  create: LineItemCreateWithoutUserInput;
+}
+
+export interface LinkedUserUpdateInput {
+  inviteSent?: Maybe<Boolean>;
+  inviteAccepted?: Maybe<Boolean>;
+  linkedUser?: Maybe<UserUpdateOneWithoutLinkedUserInput>;
 }
 
 export interface UserWhereInput {
@@ -455,13 +562,48 @@ export interface UserWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
-  relatedUser?: Maybe<UserWhereInput>;
+  linkedUser?: Maybe<LinkedUserWhereInput>;
   lineItems_every?: Maybe<LineItemWhereInput>;
   lineItems_some?: Maybe<LineItemWhereInput>;
   lineItems_none?: Maybe<LineItemWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface UserCreateWithoutLinkedUserInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  lineItems?: Maybe<LineItemCreateManyWithoutUserInput>;
+}
+
+export interface UserCreateOneWithoutLinkedUserInput {
+  create?: Maybe<UserCreateWithoutLinkedUserInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface LinkedUserCreateInput {
+  id?: Maybe<ID_Input>;
+  inviteSent?: Maybe<Boolean>;
+  inviteAccepted?: Maybe<Boolean>;
+  linkedUser?: Maybe<UserCreateOneWithoutLinkedUserInput>;
+}
+
+export interface LineItemCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  amount: Float;
+  type: String;
+  deleted?: Maybe<Boolean>;
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: Maybe<String>;
+}
+
+export interface LineItemUpdateWithWhereUniqueWithoutUserInput {
+  where: LineItemWhereUniqueInput;
+  data: LineItemUpdateWithoutUserDataInput;
 }
 
 export interface LineItemScalarWhereInput {
@@ -530,6 +672,10 @@ export interface LineItemScalarWhereInput {
   NOT?: Maybe<LineItemScalarWhereInput[] | LineItemScalarWhereInput>;
 }
 
+export type LinkedUserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export interface NodeNode {
   id: ID_Output;
 }
@@ -553,128 +699,25 @@ export interface UserPreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+export interface LinkedUserConnection {
+  pageInfo: PageInfo;
+  edges: LinkedUserEdge[];
 }
 
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
+export interface LinkedUserConnectionPromise
+  extends Promise<LinkedUserConnection>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LinkedUserEdge>>() => T;
+  aggregate: <T = AggregateLinkedUserPromise>() => T;
 }
 
-export interface LineItem {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  name: String;
-  amount: Float;
-  type: String;
-  deleted?: Boolean;
-}
-
-export interface LineItemPromise extends Promise<LineItem>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  amount: () => Promise<Float>;
-  type: () => Promise<String>;
-  deleted: () => Promise<Boolean>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface LineItemSubscription
-  extends Promise<AsyncIterator<LineItem>>,
+export interface LinkedUserConnectionSubscription
+  extends Promise<AsyncIterator<LinkedUserConnection>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  amount: () => Promise<AsyncIterator<Float>>;
-  type: () => Promise<AsyncIterator<String>>;
-  deleted: () => Promise<AsyncIterator<Boolean>>;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface LineItemNullablePromise
-  extends Promise<LineItem | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  amount: () => Promise<Float>;
-  type: () => Promise<String>;
-  deleted: () => Promise<Boolean>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface LineItemSubscriptionPayload {
-  mutation: MutationType;
-  node: LineItem;
-  updatedFields: String[];
-  previousValues: LineItemPreviousValues;
-}
-
-export interface LineItemSubscriptionPayloadPromise
-  extends Promise<LineItemSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = LineItemPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = LineItemPreviousValuesPromise>() => T;
-}
-
-export interface LineItemSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<LineItemSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LineItemSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LineItemPreviousValuesSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LinkedUserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLinkedUserSubscription>() => T;
 }
 
 export interface LineItemPreviousValues {
@@ -708,116 +751,26 @@ export interface LineItemPreviousValuesSubscription
   deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface LineItemConnection {
-  pageInfo: PageInfo;
-  edges: LineItemEdge[];
-}
-
-export interface LineItemConnectionPromise
-  extends Promise<LineItemConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LineItemEdge>>() => T;
-  aggregate: <T = AggregateLineItemPromise>() => T;
-}
-
-export interface LineItemConnectionSubscription
-  extends Promise<AsyncIterator<LineItemConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LineItemEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLineItemSubscription>() => T;
-}
-
-export interface User {
+export interface LinkedUserPreviousValues {
   id: ID_Output;
-  email: String;
+  inviteSent?: Boolean;
+  inviteAccepted?: Boolean;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface LinkedUserPreviousValuesPromise
+  extends Promise<LinkedUserPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  relatedUser: <T = UserPromise>() => T;
-  lineItems: <T = FragmentableArray<LineItem>>(args?: {
-    where?: LineItemWhereInput;
-    orderBy?: LineItemOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  inviteSent: () => Promise<Boolean>;
+  inviteAccepted: () => Promise<Boolean>;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface LinkedUserPreviousValuesSubscription
+  extends Promise<AsyncIterator<LinkedUserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  relatedUser: <T = UserSubscription>() => T;
-  lineItems: <T = Promise<AsyncIterator<LineItemSubscription>>>(args?: {
-    where?: LineItemWhereInput;
-    orderBy?: LineItemOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  relatedUser: <T = UserPromise>() => T;
-  lineItems: <T = FragmentableArray<LineItem>>(args?: {
-    where?: LineItemWhereInput;
-    orderBy?: LineItemOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  inviteSent: () => Promise<AsyncIterator<Boolean>>;
+  inviteAccepted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface LineItemEdge {
@@ -880,17 +833,345 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export type Long = string;
+export interface BatchPayload {
+  count: Long;
+}
 
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
-*/
-export type Float = number;
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface LinkedUser {
+  id: ID_Output;
+  inviteSent?: Boolean;
+  inviteAccepted?: Boolean;
+}
+
+export interface LinkedUserPromise extends Promise<LinkedUser>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  inviteSent: () => Promise<Boolean>;
+  inviteAccepted: () => Promise<Boolean>;
+  linkedUser: <T = UserPromise>() => T;
+}
+
+export interface LinkedUserSubscription
+  extends Promise<AsyncIterator<LinkedUser>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  inviteSent: () => Promise<AsyncIterator<Boolean>>;
+  inviteAccepted: () => Promise<AsyncIterator<Boolean>>;
+  linkedUser: <T = UserSubscription>() => T;
+}
+
+export interface LinkedUserNullablePromise
+  extends Promise<LinkedUser | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  inviteSent: () => Promise<Boolean>;
+  inviteAccepted: () => Promise<Boolean>;
+  linkedUser: <T = UserPromise>() => T;
+}
+
+export interface LinkedUserEdge {
+  node: LinkedUser;
+  cursor: String;
+}
+
+export interface LinkedUserEdgePromise
+  extends Promise<LinkedUserEdge>,
+    Fragmentable {
+  node: <T = LinkedUserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface LinkedUserEdgeSubscription
+  extends Promise<AsyncIterator<LinkedUserEdge>>,
+    Fragmentable {
+  node: <T = LinkedUserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface LineItemSubscriptionPayload {
+  mutation: MutationType;
+  node: LineItem;
+  updatedFields: String[];
+  previousValues: LineItemPreviousValues;
+}
+
+export interface LineItemSubscriptionPayloadPromise
+  extends Promise<LineItemSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = LineItemPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = LineItemPreviousValuesPromise>() => T;
+}
+
+export interface LineItemSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LineItemSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = LineItemSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = LineItemPreviousValuesSubscription>() => T;
+}
+
+export interface LineItem {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  name: String;
+  amount: Float;
+  type: String;
+  deleted?: Boolean;
+}
+
+export interface LineItemPromise extends Promise<LineItem>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  amount: () => Promise<Float>;
+  type: () => Promise<String>;
+  deleted: () => Promise<Boolean>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface LineItemSubscription
+  extends Promise<AsyncIterator<LineItem>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  amount: () => Promise<AsyncIterator<Float>>;
+  type: () => Promise<AsyncIterator<String>>;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface LineItemNullablePromise
+  extends Promise<LineItem | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  amount: () => Promise<Float>;
+  type: () => Promise<String>;
+  deleted: () => Promise<Boolean>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface LinkedUserSubscriptionPayload {
+  mutation: MutationType;
+  node: LinkedUser;
+  updatedFields: String[];
+  previousValues: LinkedUserPreviousValues;
+}
+
+export interface LinkedUserSubscriptionPayloadPromise
+  extends Promise<LinkedUserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = LinkedUserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = LinkedUserPreviousValuesPromise>() => T;
+}
+
+export interface LinkedUserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LinkedUserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = LinkedUserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = LinkedUserPreviousValuesSubscription>() => T;
+}
+
+export interface LineItemConnection {
+  pageInfo: PageInfo;
+  edges: LineItemEdge[];
+}
+
+export interface LineItemConnectionPromise
+  extends Promise<LineItemConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LineItemEdge>>() => T;
+  aggregate: <T = AggregateLineItemPromise>() => T;
+}
+
+export interface LineItemConnectionSubscription
+  extends Promise<AsyncIterator<LineItemConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LineItemEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLineItemSubscription>() => T;
+}
+
+export interface User {
+  id: ID_Output;
+  email: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  linkedUser: <T = LinkedUserPromise>() => T;
+  lineItems: <T = FragmentableArray<LineItem>>(args?: {
+    where?: LineItemWhereInput;
+    orderBy?: LineItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  linkedUser: <T = LinkedUserSubscription>() => T;
+  lineItems: <T = Promise<AsyncIterator<LineItemSubscription>>>(args?: {
+    where?: LineItemWhereInput;
+    orderBy?: LineItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  linkedUser: <T = LinkedUserPromise>() => T;
+  lineItems: <T = FragmentableArray<LineItem>>(args?: {
+    where?: LineItemWhereInput;
+    orderBy?: LineItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface AggregateLinkedUser {
+  count: Int;
+}
+
+export interface AggregateLinkedUserPromise
+  extends Promise<AggregateLinkedUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateLinkedUserSubscription
+  extends Promise<AsyncIterator<AggregateLinkedUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+export type Long = string;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -903,10 +1184,9 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -914,9 +1194,9 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 */
-export type String = string;
+export type Float = number;
 
 /**
  * Model Metadata
@@ -925,6 +1205,10 @@ export type String = string;
 export const models: Model[] = [
   {
     name: "LineItemType",
+    embedded: false
+  },
+  {
+    name: "LinkedUser",
     embedded: false
   },
   {

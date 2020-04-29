@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { useMutation } from "@apollo/client"
-import { Link } from "react-router-dom"
 import { css } from "emotion"
 import NewUserProps from "../Interfaces/NewUserProps"
 import CREATE_NEW_USER from "../Executables/Mutations/CREATE_NEW_USER"
 import Loading from "../Components/Loading"
 
-const SignUp =( { user } : { user: NewUserProps })=> {
+const SignUp: FC<NewUserProps> =({ user })=> {
 
     const [isSignedUp, setIsSignedUp] = useState<boolean>(false)
 

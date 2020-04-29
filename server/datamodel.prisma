@@ -3,6 +3,13 @@ enum LineItemType {
   EXPENSE
 }
 
+type LinkedUser {
+  id: ID! @id
+  inviteSent: Boolean
+  inviteAccepted: Boolean
+  linkedUser: User
+}
+
 type LineItem {
   id: ID! @id
   createdAt: DateTime! @createdAt
@@ -16,6 +23,6 @@ type LineItem {
 type User {
   id: ID! @id
   email: String! @unique
-  relatedUser: User @relation(link: INLINE)
+  linkedUser: LinkedUser @relation(link: INLINE)
   lineItems: [LineItem]
 }
