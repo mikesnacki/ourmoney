@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import Loading from "./Loading";
 import { css } from "emotion";
 import { useQuery } from "@apollo/client";
-import LineItemProps from "../Interfaces/LineItemProps";
-import LineItem from "./LineItem";
-import CreateBudgetItem from "./CreateBudgetItem";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LineItemProps from "../Interfaces/LineItemProps";
+import LineItem from "./LineItem";
 import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
 import { useAuth0 } from "../Hooks/useAuth"
+import Loading from "./Loading";
+import CreateBudgetItem from "./CreateBudgetItem";
+import SignUp from "./Signup"
 
 const calculateLineItem = (inputArray: Array<any>, param: string, type: string, sumField:string) => {
     return inputArray.filter(inputItem=> inputItem[param] === type)
@@ -17,11 +18,12 @@ const calculateLineItem = (inputArray: Array<any>, param: string, type: string, 
 
 const Budget =()=> {
 
-    const { user } = useAuth0();
-
     const [newItemDisplayed, setNewItemDisplayed] = useState<boolean>(false)
 
+    const { user } = useAuth0();
+
     let userBudget: LineItemProps[] = []
+    let userID: string
 
     const { loading, error, data } = useQuery(GET_USER_DATA, {
         variables: {user: user.email},
@@ -30,8 +32,18 @@ const Budget =()=> {
 
     if (loading || !user ) {return <Loading/> }
     if (error) {return <p>Error</p>} 
+    console.log(user)
 
+    if (!data.users[0]){
+        return (
+            <SignUp
+                user={user}
+            />
+        )
+    }
     userBudget = data.users[0].lineItems
+    userID = data.users[0].id
+
     const userIncomesObject: LineItemProps = {
         name: "Total Income",
         type: "INCOME",
@@ -49,7 +61,6 @@ const Budget =()=> {
         type: "INCOME",
         amount: userIncomesObject.amount - userExpensesObject.amount,
     }
-
 
     return(
         <div className={css`
@@ -90,6 +101,7 @@ const Budget =()=> {
         <CreateBudgetItem
             newItemDisplayed={newItemDisplayed} 
             setNewItemDisplayed={setNewItemDisplayed} 
+            userID={userID}
         />
         <button
             className={css`

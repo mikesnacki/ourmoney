@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { useMutation } from "@apollo/client"
-import  LineItemProps from "../Interfaces/LineItemProps"
-import  CreateItemProps from "../Interfaces/CreateItemProps"
-import DataProps from "../Interfaces/UserProps"
+import LineItemProps from "../Interfaces/LineItemProps"
+import CreateItemProps from "../Interfaces/CreateItemProps"
+import UserDataProps from "../Interfaces/UserDataProps"
 import { css } from "emotion"
 import CREATE_NEW_LINE_ITEM from "../Executables/Mutations/CREATE_NEW_LINE_ITEM"
 import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
+import Loading from "./Loading"
 
-const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemProps)=> {
-    const user:string = "ck9e8smlh000s07914dw7ff5w"
+const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed, userID }: CreateItemProps)=> {
+    const user = userID
 
     const initialState = {
         type: "INCOME",
@@ -20,12 +21,12 @@ const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemPr
 
     const [newLineItem, setNewLineItem] = useState<LineItemProps>(initialState)
 
-    const [ createLineItem ] = useMutation(
+    const [ createLineItem, { loading } ] = useMutation(
         CREATE_NEW_LINE_ITEM, 
         {
             update(cache, { data: { createLineItem } }) {
                 let lineItems: any
-                lineItems = cache.readQuery<DataProps[]>({ query: GET_USER_DATA });
+                lineItems = cache.readQuery<UserDataProps[]>({ query: GET_USER_DATA });
                 cache.writeQuery({
                 query: GET_USER_DATA,
                 data: { lineItems: lineItems.concat([createLineItem])},
@@ -45,25 +46,19 @@ const CreateBudgetItem = ({newItemDisplayed , setNewItemDisplayed}: CreateItemPr
     }
 
     const submitNewLineItem =()=>{
-        // createLineItem({variables: {
-        //     data: {
-        //         type: newLineItem.type, 
-        //         amount: +newLineItem.amount, 
-        //         name: newLineItem.name,
-        //         user: newLineItem.user,
-        //     }
-        // }})
         createLineItem({variables: {
             data: {
                 type: newLineItem.type, 
                 amount: +newLineItem.amount, 
                 name: newLineItem.name,
-                user: {create: { email: "mikesnacki@gmail.com"}},
+                user: newLineItem.user,
             }
         }})
         setNewLineItem(initialState)
         setNewItemDisplayed(false)
     }
+
+    if (loading) { return <Loading/>}
 
     return (
         <div className={`modal display-block-${newItemDisplayed}`}>

@@ -14,7 +14,7 @@ const Menu =(Props: DisplayProps)=>{
 
     const links:(JSX.Element | boolean)[] = [
         <Link key={1} className="nav-links" to="/" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Home</Link>,
-        <Link key={2} className="nav-links" to="/budget" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Our Budget </Link>,
+        <Link key={2} className="nav-links" to="/budget" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Our Budget</Link>,
         !isAuthenticated && <span key={3} className="nav-links" onClick={()=>loginWithRedirect({})}>Login</span>,
         isAuthenticated && <span key={4} className="nav-links"onClick={()=>logout()}>Logout</span>,
     ]

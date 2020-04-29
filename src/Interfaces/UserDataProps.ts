@@ -1,6 +1,6 @@
 import LineItemProps from "./LineItemProps"
 
-export default interface DataProps {
+export default interface UserDataProps {
     users :{
         lineItems: Array<LineItemProps>
     }
