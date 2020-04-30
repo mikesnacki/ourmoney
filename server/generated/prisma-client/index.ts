@@ -681,7 +681,7 @@ export interface NodeNode {
 }
 
 export interface UserPreviousValues {
-  id: ID_Output;
+  id?: ID_Output;
   email: String;
 }
 
@@ -1054,7 +1054,7 @@ export interface LineItemConnectionSubscription
 }
 
 export interface User {
-  id: ID_Output;
+  id?: ID_Output;
   email: String;
 }
 

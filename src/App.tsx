@@ -1,18 +1,20 @@
 import React, { Suspense } from 'react';
 import './App.scss';
-import Header from "./Components/Header"
+import { Router, Route, Switch } from "react-router-dom";
+import { ApolloProvider, ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
+
 import ThemeSwitch from "./Components/ThemeSwitch"
 import {ThemeProvider} from "./Context/ThemeContext"
 import history from "./Utils/history"
-import { Router, Route, Switch } from "react-router-dom";
-import Loading from "./Components/Loading"
 import {Auth0Provider} from "./Hooks/useAuth"
 import config from "./auth_config.json";
-import PrivateRoute from "./Components/PrivateRoute"
-import { ApolloProvider, ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
 
+import Header from "./Components/Header"
+import Loading from "./Components/Loading"
+import PrivateRoute from "./Components/PrivateRoute"
 const Home = React.lazy(()=>import("./Components/Home"))
 const Budget = React.lazy(()=>import("./Components/Budget"))
+const Profile = React.lazy(()=>import("./Components/Profile"))
 
 const onRedirectCallback = (appState: any) => {
   history.push(
@@ -47,6 +49,7 @@ function App() {
             <Switch>
             <Route path="/" exact component={Home}/>
             <PrivateRoute path="/budget" component={Budget}/>
+            <PrivateRoute path="/profile" component={Profile}/>
             </Switch>
           </Suspense>
           </Router>

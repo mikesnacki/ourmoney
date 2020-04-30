@@ -32,7 +32,6 @@ const Budget =()=> {
 
     if (loading || !user ) {return <Loading/> }
     if (error) {return <p>Error</p>} 
-    console.log(user)
 
     if (!data.users[0]){
         return (

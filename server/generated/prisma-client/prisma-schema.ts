@@ -487,7 +487,7 @@ type Subscription {
 }
 
 type User {
-  id: ID!
+  id: ID
   email: String!
   linkedUser: LinkedUser
   lineItems(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LineItem!]
@@ -541,7 +541,7 @@ enum UserOrderByInput {
 }
 
 type UserPreviousValues {
-  id: ID!
+  id: ID
   email: String!
 }
 
