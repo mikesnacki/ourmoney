@@ -1,5 +1,13 @@
+interface SearchResultProps {
+    email?: string,
+    id?: string,
+}
+
 export default interface SearchProps {
-    searched?: boolean
-    error?: boolean
-    setSearchResults?: (searched: boolean) => void
+    userSearched?: string;
+    searchResult?: SearchResultProps
+    searched?: boolean;
+    error?: boolean;
+    setSearchResults?: (searched: boolean) => void;
+    prevState?: any,
 }
