@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { css } from "emotion";
 import { useLazyQuery } from "@apollo/client"
 import SEARCH_FOR_USER from "../Executables/Queries/SEARCH_FOR_USER"
 import SearchProps from "../Interfaces/SearchProps"
@@ -19,27 +20,40 @@ const Search = () => {
     const [searchForUser, { loading, error }] = useLazyQuery(SEARCH_FOR_USER, {
         variables: {user: search.userSearched},
         onCompleted: data=>{
-            console.log(data)
+            if (data.users[0]){
             setSearch((prevState:any)=>({
                 ...prevState,
-                seached: true,
+                searched: true,
                 searchResult:{
                     id: data.users[0].id,
                     email: data.users[0].email
                 }
                 })
-            )
+            )}
     }})
-
-    console.log(search)
 
     if (loading) { return <Loading/>}
     if (error) {return <p>Error</p>}
 
     return (
-        <div>
+        <div className={css`
+        margin: auto 3vw;`}>
+            <h2 className={css`text-align: center;`}>Search for users to add them below.</h2>
             <input type="email" onChange={e=>setSearch({userSearched: e.target.value})}></input>
-            <button type="submit" onClick={()=>searchForUser()}>Search</button>
+            <button className="" type="submit" onClick={()=>searchForUser()}>Search</button>
+            {
+                search.searched && search.searchResult !== undefined && 
+                    <div>
+                        <p>Do you want to request user {search.searchResult.email}?</p>
+                        <button>Yes</button><button>No</button>
+                    </div>
+            }
+            {
+                search.searched && search.searchResult === undefined &&
+                <div>
+                    <p>We didn't find anyone for that email.</p>
+                </div>
+            }
         </div>
     )
 

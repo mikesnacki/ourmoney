@@ -7,7 +7,14 @@ type LinkedUser {
   id: ID! @id
   inviteSent: Boolean
   inviteAccepted: Boolean
+  invitedUserName: String
   linkedUser: User
+}
+
+type IncomingRequest {
+  id: ID! @id
+  requestAccepted: Boolean!
+  userEmail: String!
 }
 
 type LineItem {
@@ -24,5 +31,6 @@ type User {
   id: ID! @id
   email: String! @unique
   linkedUser: LinkedUser @relation(link: INLINE)
+  incomingRequest: IncomingRequest @relation(link: INLINE)
   lineItems: [LineItem]
 }

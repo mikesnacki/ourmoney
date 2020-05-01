@@ -2,7 +2,11 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateLineItem {
+export const typeDefs = /* GraphQL */ `type AggregateIncomingRequest {
+  count: Int!
+}
+
+type AggregateLineItem {
   count: Int!
 }
 
@@ -19,6 +23,136 @@ type BatchPayload {
 }
 
 scalar DateTime
+
+type IncomingRequest {
+  id: ID!
+  requestAccepted: Boolean!
+  userEmail: String!
+}
+
+type IncomingRequestConnection {
+  pageInfo: PageInfo!
+  edges: [IncomingRequestEdge]!
+  aggregate: AggregateIncomingRequest!
+}
+
+input IncomingRequestCreateInput {
+  id: ID
+  requestAccepted: Boolean!
+  userEmail: String!
+}
+
+input IncomingRequestCreateOneInput {
+  create: IncomingRequestCreateInput
+  connect: IncomingRequestWhereUniqueInput
+}
+
+type IncomingRequestEdge {
+  node: IncomingRequest!
+  cursor: String!
+}
+
+enum IncomingRequestOrderByInput {
+  id_ASC
+  id_DESC
+  requestAccepted_ASC
+  requestAccepted_DESC
+  userEmail_ASC
+  userEmail_DESC
+}
+
+type IncomingRequestPreviousValues {
+  id: ID!
+  requestAccepted: Boolean!
+  userEmail: String!
+}
+
+type IncomingRequestSubscriptionPayload {
+  mutation: MutationType!
+  node: IncomingRequest
+  updatedFields: [String!]
+  previousValues: IncomingRequestPreviousValues
+}
+
+input IncomingRequestSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: IncomingRequestWhereInput
+  AND: [IncomingRequestSubscriptionWhereInput!]
+  OR: [IncomingRequestSubscriptionWhereInput!]
+  NOT: [IncomingRequestSubscriptionWhereInput!]
+}
+
+input IncomingRequestUpdateDataInput {
+  requestAccepted: Boolean
+  userEmail: String
+}
+
+input IncomingRequestUpdateInput {
+  requestAccepted: Boolean
+  userEmail: String
+}
+
+input IncomingRequestUpdateManyMutationInput {
+  requestAccepted: Boolean
+  userEmail: String
+}
+
+input IncomingRequestUpdateOneInput {
+  create: IncomingRequestCreateInput
+  update: IncomingRequestUpdateDataInput
+  upsert: IncomingRequestUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: IncomingRequestWhereUniqueInput
+}
+
+input IncomingRequestUpsertNestedInput {
+  update: IncomingRequestUpdateDataInput!
+  create: IncomingRequestCreateInput!
+}
+
+input IncomingRequestWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  requestAccepted: Boolean
+  requestAccepted_not: Boolean
+  userEmail: String
+  userEmail_not: String
+  userEmail_in: [String!]
+  userEmail_not_in: [String!]
+  userEmail_lt: String
+  userEmail_lte: String
+  userEmail_gt: String
+  userEmail_gte: String
+  userEmail_contains: String
+  userEmail_not_contains: String
+  userEmail_starts_with: String
+  userEmail_not_starts_with: String
+  userEmail_ends_with: String
+  userEmail_not_ends_with: String
+  AND: [IncomingRequestWhereInput!]
+  OR: [IncomingRequestWhereInput!]
+  NOT: [IncomingRequestWhereInput!]
+}
+
+input IncomingRequestWhereUniqueInput {
+  id: ID
+}
 
 type LineItem {
   id: ID!
@@ -303,6 +437,7 @@ type LinkedUser {
   id: ID!
   inviteSent: Boolean
   inviteAccepted: Boolean
+  invitedUserName: String
   linkedUser: User
 }
 
@@ -316,6 +451,7 @@ input LinkedUserCreateInput {
   id: ID
   inviteSent: Boolean
   inviteAccepted: Boolean
+  invitedUserName: String
   linkedUser: UserCreateOneWithoutLinkedUserInput
 }
 
@@ -328,6 +464,7 @@ input LinkedUserCreateWithoutLinkedUserInput {
   id: ID
   inviteSent: Boolean
   inviteAccepted: Boolean
+  invitedUserName: String
 }
 
 type LinkedUserEdge {
@@ -342,12 +479,15 @@ enum LinkedUserOrderByInput {
   inviteSent_DESC
   inviteAccepted_ASC
   inviteAccepted_DESC
+  invitedUserName_ASC
+  invitedUserName_DESC
 }
 
 type LinkedUserPreviousValues {
   id: ID!
   inviteSent: Boolean
   inviteAccepted: Boolean
+  invitedUserName: String
 }
 
 type LinkedUserSubscriptionPayload {
@@ -371,12 +511,14 @@ input LinkedUserSubscriptionWhereInput {
 input LinkedUserUpdateInput {
   inviteSent: Boolean
   inviteAccepted: Boolean
+  invitedUserName: String
   linkedUser: UserUpdateOneWithoutLinkedUserInput
 }
 
 input LinkedUserUpdateManyMutationInput {
   inviteSent: Boolean
   inviteAccepted: Boolean
+  invitedUserName: String
 }
 
 input LinkedUserUpdateOneWithoutLinkedUserInput {
@@ -391,6 +533,7 @@ input LinkedUserUpdateOneWithoutLinkedUserInput {
 input LinkedUserUpdateWithoutLinkedUserDataInput {
   inviteSent: Boolean
   inviteAccepted: Boolean
+  invitedUserName: String
 }
 
 input LinkedUserUpsertWithoutLinkedUserInput {
@@ -417,6 +560,20 @@ input LinkedUserWhereInput {
   inviteSent_not: Boolean
   inviteAccepted: Boolean
   inviteAccepted_not: Boolean
+  invitedUserName: String
+  invitedUserName_not: String
+  invitedUserName_in: [String!]
+  invitedUserName_not_in: [String!]
+  invitedUserName_lt: String
+  invitedUserName_lte: String
+  invitedUserName_gt: String
+  invitedUserName_gte: String
+  invitedUserName_contains: String
+  invitedUserName_not_contains: String
+  invitedUserName_starts_with: String
+  invitedUserName_not_starts_with: String
+  invitedUserName_ends_with: String
+  invitedUserName_not_ends_with: String
   linkedUser: UserWhereInput
   AND: [LinkedUserWhereInput!]
   OR: [LinkedUserWhereInput!]
@@ -430,6 +587,12 @@ input LinkedUserWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createIncomingRequest(data: IncomingRequestCreateInput!): IncomingRequest!
+  updateIncomingRequest(data: IncomingRequestUpdateInput!, where: IncomingRequestWhereUniqueInput!): IncomingRequest
+  updateManyIncomingRequests(data: IncomingRequestUpdateManyMutationInput!, where: IncomingRequestWhereInput): BatchPayload!
+  upsertIncomingRequest(where: IncomingRequestWhereUniqueInput!, create: IncomingRequestCreateInput!, update: IncomingRequestUpdateInput!): IncomingRequest!
+  deleteIncomingRequest(where: IncomingRequestWhereUniqueInput!): IncomingRequest
+  deleteManyIncomingRequests(where: IncomingRequestWhereInput): BatchPayload!
   createLineItem(data: LineItemCreateInput!): LineItem!
   updateLineItem(data: LineItemUpdateInput!, where: LineItemWhereUniqueInput!): LineItem
   updateManyLineItems(data: LineItemUpdateManyMutationInput!, where: LineItemWhereInput): BatchPayload!
@@ -468,6 +631,9 @@ type PageInfo {
 }
 
 type Query {
+  incomingRequest(where: IncomingRequestWhereUniqueInput!): IncomingRequest
+  incomingRequests(where: IncomingRequestWhereInput, orderBy: IncomingRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [IncomingRequest]!
+  incomingRequestsConnection(where: IncomingRequestWhereInput, orderBy: IncomingRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IncomingRequestConnection!
   lineItem(where: LineItemWhereUniqueInput!): LineItem
   lineItems(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LineItem]!
   lineItemsConnection(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LineItemConnection!
@@ -481,15 +647,17 @@ type Query {
 }
 
 type Subscription {
+  incomingRequest(where: IncomingRequestSubscriptionWhereInput): IncomingRequestSubscriptionPayload
   lineItem(where: LineItemSubscriptionWhereInput): LineItemSubscriptionPayload
   linkedUser(where: LinkedUserSubscriptionWhereInput): LinkedUserSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User {
-  id: ID
+  id: ID!
   email: String!
   linkedUser: LinkedUser
+  incomingRequest: IncomingRequest
   lineItems(where: LineItemWhereInput, orderBy: LineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LineItem!]
 }
 
@@ -503,6 +671,7 @@ input UserCreateInput {
   id: ID
   email: String!
   linkedUser: LinkedUserCreateOneWithoutLinkedUserInput
+  incomingRequest: IncomingRequestCreateOneInput
   lineItems: LineItemCreateManyWithoutUserInput
 }
 
@@ -520,11 +689,13 @@ input UserCreateWithoutLineItemsInput {
   id: ID
   email: String!
   linkedUser: LinkedUserCreateOneWithoutLinkedUserInput
+  incomingRequest: IncomingRequestCreateOneInput
 }
 
 input UserCreateWithoutLinkedUserInput {
   id: ID
   email: String!
+  incomingRequest: IncomingRequestCreateOneInput
   lineItems: LineItemCreateManyWithoutUserInput
 }
 
@@ -541,7 +712,7 @@ enum UserOrderByInput {
 }
 
 type UserPreviousValues {
-  id: ID
+  id: ID!
   email: String!
 }
 
@@ -566,6 +737,7 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   linkedUser: LinkedUserUpdateOneWithoutLinkedUserInput
+  incomingRequest: IncomingRequestUpdateOneInput
   lineItems: LineItemUpdateManyWithoutUserInput
 }
 
@@ -592,10 +764,12 @@ input UserUpdateOneWithoutLinkedUserInput {
 input UserUpdateWithoutLineItemsDataInput {
   email: String
   linkedUser: LinkedUserUpdateOneWithoutLinkedUserInput
+  incomingRequest: IncomingRequestUpdateOneInput
 }
 
 input UserUpdateWithoutLinkedUserDataInput {
   email: String
+  incomingRequest: IncomingRequestUpdateOneInput
   lineItems: LineItemUpdateManyWithoutUserInput
 }
 
@@ -639,6 +813,7 @@ input UserWhereInput {
   email_ends_with: String
   email_not_ends_with: String
   linkedUser: LinkedUserWhereInput
+  incomingRequest: IncomingRequestWhereInput
   lineItems_every: LineItemWhereInput
   lineItems_some: LineItemWhereInput
   lineItems_none: LineItemWhereInput
