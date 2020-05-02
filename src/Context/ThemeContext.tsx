@@ -1,12 +1,5 @@
 import React, {useState, createContext, useLayoutEffect } from 'react'
-
-type ThemeProps = {
-    dark?: boolean,
-    toggle?: ()=> void,
-    children: React.ReactChild[],
-    setDark?: string,
-    theme?:string,
-}
+import ThemeProps from "../Interfaces/ThemeProps"
 
 const ThemeContext = createContext({
     dark: false, 
