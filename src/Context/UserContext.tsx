@@ -1,4 +1,4 @@
-import React, {useContext, createContext} from 'react'
+import React, { createContext } from 'react'
 import { useAuth0 } from "../Hooks/useAuth"
 import Loading from "../Components/Loading"
 import LineItemProps from "../Interfaces/LineItemProps";
@@ -8,9 +8,8 @@ import { useQuery } from "@apollo/client"
 type ContextProps ={
     user?: object;
     userID?: string,
-    loading: boolean;
-    error: false;
-    children: React.ReactChild[];
+    loading?: boolean;
+    children: React.ReactChild | React.ReactChild[];
     userBudget?: LineItemProps[],
 }
 
@@ -18,30 +17,29 @@ const UserContext = createContext({
     user: null,
     userID: "",
     loading: false,
-    error: false,
     userBudget: []
 })
 export default UserContext
 
 export const UserProvider =(props: ContextProps)=>{
 
-    const {user, error, loading} = useAuth0()
+    const {user} = useAuth0()
     let userBudget = []
     let userID: string
 
-    const { data } = useQuery(GET_USER_DATA, {
+    const { data, loading } = useQuery(GET_USER_DATA, {
         variables: {user: user.email},
         pollInterval: 500,
     });
 
+    if (loading) return <Loading/>
+
     userBudget = data.users[0].lineItems
     userID = data.users[0].id
-    
-    if (loading) return <Loading/>
 
     return (
         <UserContext.Provider
-        value={{user, userID, loading, error, userBudget}}>
+        value={{user, userID, loading, userBudget}}>
             {props.children}
         </UserContext.Provider>
     )

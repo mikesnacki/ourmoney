@@ -4,9 +4,10 @@ import { Router, Route, Switch } from "react-router-dom";
 import { ApolloProvider, ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
 
 import ThemeSwitch from "./Components/ThemeSwitch"
-import {ThemeProvider} from "./Context/ThemeContext"
+import { ThemeProvider } from "./Context/ThemeContext"
+import { UserProvider } from "./Context/UserContext"
 import history from "./Utils/history"
-import {Auth0Provider} from "./Hooks/useAuth"
+import { Auth0Provider } from "./Hooks/useAuth"
 import config from "./auth_config.json";
 
 import Header from "./Components/Header"
@@ -48,7 +49,7 @@ function App() {
             <Header/>
             <Switch>
             <Route path="/" exact component={Home}/>
-            <PrivateRoute path="/budget" component={Budget}/>
+              <PrivateRoute path="/budget" component={Budget}/>
             <Route path="/profile" component={Profile}/>
             </Switch>
           </Suspense>
