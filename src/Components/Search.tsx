@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { css } from "emotion";
-import { useLazyQuery } from "@apollo/client"
+import { useLazyQuery, useMutation } from "@apollo/client"
 import SEARCH_FOR_USER from "../Executables/Queries/SEARCH_FOR_USER"
+import CREATE_REQUESTED_USER from "../Executables/Mutations/CREATE_REQUESTED_USER"
 import SearchProps from "../Interfaces/SearchProps"
 import Loading from "./Loading"
 
@@ -32,6 +33,19 @@ const Search = () => {
             )}
     }})
 
+    const [createRequestedUser] = useMutation(CREATE_REQUESTED_USER, {
+        variables: {
+            data: {
+                linkedUser: {create: {invitedUserName: search.userSearched} }
+              },
+            where: { 
+                email: "mikesnacki@gmail.com"
+            }
+    }
+    })
+
+
+
     if (loading) { return <Loading/>}
     if (error) {return <p>Error</p>}
 
@@ -45,7 +59,7 @@ const Search = () => {
                 search.searched && search.searchResult !== undefined && 
                     <div>
                         <p>Do you want to request user {search.searchResult.email}?</p>
-                        <button>Yes</button><button>No</button>
+                        <button onClick={()=>createRequestedUser()}>Yes</button><button>No</button>
                     </div>
             }
             {
