@@ -124,10 +124,6 @@ export interface Prisma {
     data: LinkedUserUpdateInput;
     where: LinkedUserWhereUniqueInput;
   }) => LinkedUserPromise;
-  updateManyLinkedUsers: (args: {
-    data: LinkedUserUpdateManyMutationInput;
-    where?: LinkedUserWhereInput;
-  }) => BatchPayloadPromise;
   upsertLinkedUser: (args: {
     where: LinkedUserWhereUniqueInput;
     create: LinkedUserCreateInput;
@@ -196,12 +192,8 @@ export type LineItemOrderByInput =
 export type LinkedUserOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "inviteSent_ASC"
-  | "inviteSent_DESC"
-  | "inviteAccepted_ASC"
-  | "inviteAccepted_DESC"
-  | "invitedUserName_ASC"
-  | "invitedUserName_DESC";
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -211,13 +203,11 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface LinkedUserUpdateOneWithoutLinkedUserInput {
-  create?: Maybe<LinkedUserCreateWithoutLinkedUserInput>;
-  update?: Maybe<LinkedUserUpdateWithoutLinkedUserDataInput>;
-  upsert?: Maybe<LinkedUserUpsertWithoutLinkedUserInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<LinkedUserWhereUniqueInput>;
+export interface UserUpdateOneRequiredWithoutLineItemsInput {
+  create?: Maybe<UserCreateWithoutLineItemsInput>;
+  update?: Maybe<UserUpdateWithoutLineItemsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutLineItemsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export type LineItemWhereUniqueInput = AtLeastOne<{
@@ -247,11 +237,15 @@ export interface LineItemUpdateManyWithoutUserInput {
   >;
 }
 
-export interface LineItemCreateManyWithoutUserInput {
-  create?: Maybe<
-    LineItemCreateWithoutUserInput[] | LineItemCreateWithoutUserInput
-  >;
-  connect?: Maybe<LineItemWhereUniqueInput[] | LineItemWhereUniqueInput>;
+export interface UserCreateWithoutLinkedUserInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  lineItems?: Maybe<LineItemCreateManyWithoutUserInput>;
+}
+
+export interface UserUpdateWithoutLinkedUserDataInput {
+  email?: Maybe<String>;
+  lineItems?: Maybe<LineItemUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpsertWithoutLineItemsInput {
@@ -326,15 +320,6 @@ export interface LineItemWhereInput {
   NOT?: Maybe<LineItemWhereInput[] | LineItemWhereInput>;
 }
 
-export interface LineItemCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  amount: Float;
-  type: String;
-  deleted?: Maybe<Boolean>;
-  user: UserCreateOneWithoutLineItemsInput;
-}
-
 export interface LinkedUserWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
@@ -350,33 +335,27 @@ export interface LinkedUserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  inviteSent?: Maybe<Boolean>;
-  inviteSent_not?: Maybe<Boolean>;
-  inviteAccepted?: Maybe<Boolean>;
-  inviteAccepted_not?: Maybe<Boolean>;
-  invitedUserName?: Maybe<String>;
-  invitedUserName_not?: Maybe<String>;
-  invitedUserName_in?: Maybe<String[] | String>;
-  invitedUserName_not_in?: Maybe<String[] | String>;
-  invitedUserName_lt?: Maybe<String>;
-  invitedUserName_lte?: Maybe<String>;
-  invitedUserName_gt?: Maybe<String>;
-  invitedUserName_gte?: Maybe<String>;
-  invitedUserName_contains?: Maybe<String>;
-  invitedUserName_not_contains?: Maybe<String>;
-  invitedUserName_starts_with?: Maybe<String>;
-  invitedUserName_not_starts_with?: Maybe<String>;
-  invitedUserName_ends_with?: Maybe<String>;
-  invitedUserName_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   linkedUser?: Maybe<UserWhereInput>;
   AND?: Maybe<LinkedUserWhereInput[] | LinkedUserWhereInput>;
   OR?: Maybe<LinkedUserWhereInput[] | LinkedUserWhereInput>;
   NOT?: Maybe<LinkedUserWhereInput[] | LinkedUserWhereInput>;
 }
 
-export interface UserCreateOneWithoutLineItemsInput {
-  create?: Maybe<UserCreateWithoutLineItemsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface LineItemCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  amount: Float;
+  type: String;
+  deleted?: Maybe<Boolean>;
+  user: UserCreateOneWithoutLineItemsInput;
 }
 
 export interface LineItemSubscriptionWhereInput {
@@ -394,10 +373,9 @@ export interface LineItemSubscriptionWhereInput {
   >;
 }
 
-export interface UserCreateWithoutLineItemsInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  linkedUser?: Maybe<LinkedUserCreateOneWithoutLinkedUserInput>;
+export interface UserCreateOneWithoutLineItemsInput {
+  create?: Maybe<UserCreateWithoutLineItemsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpdateInput {
@@ -406,22 +384,10 @@ export interface UserUpdateInput {
   lineItems?: Maybe<LineItemUpdateManyWithoutUserInput>;
 }
 
-export interface LinkedUserCreateOneWithoutLinkedUserInput {
-  create?: Maybe<LinkedUserCreateWithoutLinkedUserInput>;
-  connect?: Maybe<LinkedUserWhereUniqueInput>;
-}
-
-export interface LinkedUserUpdateManyMutationInput {
-  inviteSent?: Maybe<Boolean>;
-  inviteAccepted?: Maybe<Boolean>;
-  invitedUserName?: Maybe<String>;
-}
-
-export interface LinkedUserCreateWithoutLinkedUserInput {
+export interface UserCreateWithoutLineItemsInput {
   id?: Maybe<ID_Input>;
-  inviteSent?: Maybe<Boolean>;
-  inviteAccepted?: Maybe<Boolean>;
-  invitedUserName?: Maybe<String>;
+  email: String;
+  linkedUser?: Maybe<LinkedUserCreateOneWithoutLinkedUserInput>;
 }
 
 export interface UserUpsertWithoutLinkedUserInput {
@@ -429,101 +395,9 @@ export interface UserUpsertWithoutLinkedUserInput {
   create: UserCreateWithoutLinkedUserInput;
 }
 
-export interface LineItemUpdateInput {
-  name?: Maybe<String>;
-  amount?: Maybe<Float>;
-  type?: Maybe<String>;
-  deleted?: Maybe<Boolean>;
-  user?: Maybe<UserUpdateOneRequiredWithoutLineItemsInput>;
-}
-
-export interface LineItemUpdateManyWithWhereNestedInput {
-  where: LineItemScalarWhereInput;
-  data: LineItemUpdateManyDataInput;
-}
-
-export interface UserUpdateOneRequiredWithoutLineItemsInput {
-  create?: Maybe<UserCreateWithoutLineItemsInput>;
-  update?: Maybe<UserUpdateWithoutLineItemsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLineItemsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface UserUpdateWithoutLineItemsDataInput {
-  email?: Maybe<String>;
-  linkedUser?: Maybe<LinkedUserUpdateOneWithoutLinkedUserInput>;
-}
-
-export interface LineItemUpdateWithoutUserDataInput {
-  name?: Maybe<String>;
-  amount?: Maybe<Float>;
-  type?: Maybe<String>;
-  deleted?: Maybe<Boolean>;
-}
-
-export interface UserUpdateWithoutLinkedUserDataInput {
-  email?: Maybe<String>;
-  lineItems?: Maybe<LineItemUpdateManyWithoutUserInput>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface LinkedUserUpdateWithoutLinkedUserDataInput {
-  inviteSent?: Maybe<Boolean>;
-  inviteAccepted?: Maybe<Boolean>;
-  invitedUserName?: Maybe<String>;
-}
-
-export interface LinkedUserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LinkedUserWhereInput>;
-  AND?: Maybe<
-    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
-  >;
-}
-
-export interface LinkedUserUpsertWithoutLinkedUserInput {
-  update: LinkedUserUpdateWithoutLinkedUserDataInput;
-  create: LinkedUserCreateWithoutLinkedUserInput;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  linkedUser?: Maybe<LinkedUserCreateOneWithoutLinkedUserInput>;
-  lineItems?: Maybe<LineItemCreateManyWithoutUserInput>;
-}
-
-export interface UserUpdateOneWithoutLinkedUserInput {
-  create?: Maybe<UserCreateWithoutLinkedUserInput>;
-  update?: Maybe<UserUpdateWithoutLinkedUserDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLinkedUserInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface LinkedUserCreateOneWithoutLinkedUserInput {
+  create?: Maybe<LinkedUserCreateWithoutLinkedUserInput>;
+  connect?: Maybe<LinkedUserWhereUniqueInput>;
 }
 
 export interface LineItemUpdateManyDataInput {
@@ -533,98 +407,8 @@ export interface LineItemUpdateManyDataInput {
   deleted?: Maybe<Boolean>;
 }
 
-export interface LineItemUpdateManyMutationInput {
-  name?: Maybe<String>;
-  amount?: Maybe<Float>;
-  type?: Maybe<String>;
-  deleted?: Maybe<Boolean>;
-}
-
-export interface LineItemUpsertWithWhereUniqueWithoutUserInput {
-  where: LineItemWhereUniqueInput;
-  update: LineItemUpdateWithoutUserDataInput;
-  create: LineItemCreateWithoutUserInput;
-}
-
-export interface LinkedUserUpdateInput {
-  inviteSent?: Maybe<Boolean>;
-  inviteAccepted?: Maybe<Boolean>;
-  invitedUserName?: Maybe<String>;
-  linkedUser?: Maybe<UserUpdateOneWithoutLinkedUserInput>;
-}
-
-export interface UserWhereInput {
+export interface LinkedUserCreateWithoutLinkedUserInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  linkedUser?: Maybe<LinkedUserWhereInput>;
-  lineItems_every?: Maybe<LineItemWhereInput>;
-  lineItems_some?: Maybe<LineItemWhereInput>;
-  lineItems_none?: Maybe<LineItemWhereInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface UserCreateWithoutLinkedUserInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  lineItems?: Maybe<LineItemCreateManyWithoutUserInput>;
-}
-
-export interface UserCreateOneWithoutLinkedUserInput {
-  create?: Maybe<UserCreateWithoutLinkedUserInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface LinkedUserCreateInput {
-  id?: Maybe<ID_Input>;
-  inviteSent?: Maybe<Boolean>;
-  inviteAccepted?: Maybe<Boolean>;
-  invitedUserName?: Maybe<String>;
-  linkedUser?: Maybe<UserCreateOneWithoutLinkedUserInput>;
-}
-
-export interface LineItemCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  amount: Float;
-  type: String;
-  deleted?: Maybe<Boolean>;
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: Maybe<String>;
-}
-
-export interface LineItemUpdateWithWhereUniqueWithoutUserInput {
-  where: LineItemWhereUniqueInput;
-  data: LineItemUpdateWithoutUserDataInput;
 }
 
 export interface LineItemScalarWhereInput {
@@ -693,9 +477,179 @@ export interface LineItemScalarWhereInput {
   NOT?: Maybe<LineItemScalarWhereInput[] | LineItemScalarWhereInput>;
 }
 
+export interface LineItemUpdateInput {
+  name?: Maybe<String>;
+  amount?: Maybe<Float>;
+  type?: Maybe<String>;
+  deleted?: Maybe<Boolean>;
+  user?: Maybe<UserUpdateOneRequiredWithoutLineItemsInput>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface UserUpdateOneWithoutLinkedUserInput {
+  create?: Maybe<UserCreateWithoutLinkedUserInput>;
+  update?: Maybe<UserUpdateWithoutLinkedUserDataInput>;
+  upsert?: Maybe<UserUpsertWithoutLinkedUserInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface LineItemUpdateWithWhereUniqueWithoutUserInput {
+  where: LineItemWhereUniqueInput;
+  data: LineItemUpdateWithoutUserDataInput;
+}
+
+export interface UserUpdateWithoutLineItemsDataInput {
+  email?: Maybe<String>;
+  linkedUser?: Maybe<LinkedUserUpdateOneWithoutLinkedUserInput>;
+}
+
+export interface UserWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  linkedUser?: Maybe<LinkedUserWhereInput>;
+  lineItems_every?: Maybe<LineItemWhereInput>;
+  lineItems_some?: Maybe<LineItemWhereInput>;
+  lineItems_none?: Maybe<LineItemWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface LinkedUserUpdateOneWithoutLinkedUserInput {
+  create?: Maybe<LinkedUserCreateWithoutLinkedUserInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<LinkedUserWhereUniqueInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: Maybe<String>;
+}
+
+export interface LinkedUserUpdateInput {
+  linkedUser?: Maybe<UserUpdateOneWithoutLinkedUserInput>;
+}
+
 export type LinkedUserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export interface LineItemUpdateManyMutationInput {
+  name?: Maybe<String>;
+  amount?: Maybe<Float>;
+  type?: Maybe<String>;
+  deleted?: Maybe<Boolean>;
+}
+
+export interface LineItemUpsertWithWhereUniqueWithoutUserInput {
+  where: LineItemWhereUniqueInput;
+  update: LineItemUpdateWithoutUserDataInput;
+  create: LineItemCreateWithoutUserInput;
+}
+
+export interface UserCreateOneWithoutLinkedUserInput {
+  create?: Maybe<UserCreateWithoutLinkedUserInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface LinkedUserCreateInput {
+  id?: Maybe<ID_Input>;
+  linkedUser?: Maybe<UserCreateOneWithoutLinkedUserInput>;
+}
+
+export interface LineItemCreateManyWithoutUserInput {
+  create?: Maybe<
+    LineItemCreateWithoutUserInput[] | LineItemCreateWithoutUserInput
+  >;
+  connect?: Maybe<LineItemWhereUniqueInput[] | LineItemWhereUniqueInput>;
+}
+
+export interface LineItemCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  amount: Float;
+  type: String;
+  deleted?: Maybe<Boolean>;
+}
+
+export interface LineItemUpdateWithoutUserDataInput {
+  name?: Maybe<String>;
+  amount?: Maybe<Float>;
+  type?: Maybe<String>;
+  deleted?: Maybe<Boolean>;
+}
+
+export interface LineItemUpdateManyWithWhereNestedInput {
+  where: LineItemScalarWhereInput;
+  data: LineItemUpdateManyDataInput;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  linkedUser?: Maybe<LinkedUserCreateOneWithoutLinkedUserInput>;
+  lineItems?: Maybe<LineItemCreateManyWithoutUserInput>;
+}
+
+export interface LinkedUserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LinkedUserWhereInput>;
+  AND?: Maybe<
+    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    LinkedUserSubscriptionWhereInput[] | LinkedUserSubscriptionWhereInput
+  >;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
 
 export interface NodeNode {
   id: ID_Output;
@@ -774,27 +728,21 @@ export interface LineItemPreviousValuesSubscription
 
 export interface LinkedUserPreviousValues {
   id: ID_Output;
-  inviteSent?: Boolean;
-  inviteAccepted?: Boolean;
-  invitedUserName?: String;
+  createdAt: DateTimeOutput;
 }
 
 export interface LinkedUserPreviousValuesPromise
   extends Promise<LinkedUserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  inviteSent: () => Promise<Boolean>;
-  inviteAccepted: () => Promise<Boolean>;
-  invitedUserName: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface LinkedUserPreviousValuesSubscription
   extends Promise<AsyncIterator<LinkedUserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  inviteSent: () => Promise<AsyncIterator<Boolean>>;
-  inviteAccepted: () => Promise<AsyncIterator<Boolean>>;
-  invitedUserName: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface LineItemEdge {
@@ -915,16 +863,12 @@ export interface PageInfoSubscription
 
 export interface LinkedUser {
   id: ID_Output;
-  inviteSent?: Boolean;
-  inviteAccepted?: Boolean;
-  invitedUserName?: String;
+  createdAt: DateTimeOutput;
 }
 
 export interface LinkedUserPromise extends Promise<LinkedUser>, Fragmentable {
   id: () => Promise<ID_Output>;
-  inviteSent: () => Promise<Boolean>;
-  inviteAccepted: () => Promise<Boolean>;
-  invitedUserName: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
   linkedUser: <T = UserPromise>() => T;
 }
 
@@ -932,9 +876,7 @@ export interface LinkedUserSubscription
   extends Promise<AsyncIterator<LinkedUser>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  inviteSent: () => Promise<AsyncIterator<Boolean>>;
-  inviteAccepted: () => Promise<AsyncIterator<Boolean>>;
-  invitedUserName: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   linkedUser: <T = UserSubscription>() => T;
 }
 
@@ -942,9 +884,7 @@ export interface LinkedUserNullablePromise
   extends Promise<LinkedUser | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  inviteSent: () => Promise<Boolean>;
-  inviteAccepted: () => Promise<Boolean>;
-  invitedUserName: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
   linkedUser: <T = UserPromise>() => T;
 }
 

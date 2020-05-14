@@ -5,8 +5,11 @@ import SEARCH_FOR_USER from "../Executables/Queries/SEARCH_FOR_USER"
 import CREATE_REQUESTED_USER from "../Executables/Mutations/CREATE_REQUESTED_USER"
 import SearchProps from "../Interfaces/SearchProps"
 import Loading from "./Loading"
+import { useAuth0 } from "../Hooks/useAuth"
 
 const Search = () => {
+
+    const { user } = useAuth0();
 
     const [ search, setSearch ] = useState<SearchProps>({
         userSearched: "",
@@ -39,12 +42,10 @@ const Search = () => {
                 linkedUser: {create: {invitedUserName: search.userSearched} }
               },
             where: { 
-                email: "mikesnacki@gmail.com"
+                email: user.email
             }
     }
     })
-
-
 
     if (loading) { return <Loading/>}
     if (error) {return <p>Error</p>}

@@ -49,8 +49,10 @@ function App() {
             <Header/>
             <Switch>
             <Route path="/" exact component={Home}/>
+            <UserProvider>
               <PrivateRoute path="/budget" component={Budget}/>
-            <PrivateRoute path="/profile" component={Profile}/>
+              <PrivateRoute path="/profile" component={Profile}/>
+            </UserProvider>
             </Switch>
           </Suspense>
           </Router>

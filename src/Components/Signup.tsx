@@ -1,18 +1,19 @@
-import React, { FC, useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useMutation } from "@apollo/client"
 import { css } from "emotion"
-import NewUserProps from "../Interfaces/NewUserProps"
 import CREATE_NEW_USER from "../Executables/Mutations/CREATE_NEW_USER"
 import Loading from "../Components/Loading"
+import UserContext from "../Context/UserContext"
 
-const SignUp: FC<NewUserProps> =({ user })=> {
+const SignUp =()=> {
 
     const [isSignedUp, setIsSignedUp] = useState<boolean>(false)
+    const { userEmail, loading } = useContext(UserContext)
 
-    const [createNewUser, { loading, error }] = useMutation(CREATE_NEW_USER,
+    const [createNewUser, { error }] = useMutation(CREATE_NEW_USER,
         {
             variables: {
-                data: {email: user.email}
+                data: {email: userEmail}
             }
         }
     )

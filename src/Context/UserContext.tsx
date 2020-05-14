@@ -6,15 +6,17 @@ import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
 import { useQuery } from "@apollo/client"
 
 type ContextProps ={
-    user?: object;
+    userData?: object,
     userID?: string,
+    userEmail?: string,
     loading?: boolean;
     children: React.ReactChild | React.ReactChild[];
     userBudget?: LineItemProps[],
 }
 
 const UserContext = createContext({
-    user: null,
+    userData: {},
+    userEmail: "",
     userID: "",
     loading: false,
     userBudget: []
@@ -23,9 +25,11 @@ export default UserContext
 
 export const UserProvider =(props: ContextProps)=>{
 
-    const {user} = useAuth0()
+    const { user } = useAuth0()
     let userBudget = []
     let userID: string
+    let userEmail: string
+    let userData: object
 
     const { data, loading } = useQuery(GET_USER_DATA, {
         variables: {user: user.email},
@@ -36,10 +40,12 @@ export const UserProvider =(props: ContextProps)=>{
 
     userBudget = data.users[0].lineItems
     userID = data.users[0].id
+    userEmail = data.users[0].email
+    userData = user
 
     return (
         <UserContext.Provider
-        value={{user, userID, loading, userBudget}}>
+        value={{userData, userEmail, userID, loading, userBudget}}>
             {props.children}
         </UserContext.Provider>
     )

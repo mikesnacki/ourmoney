@@ -301,9 +301,7 @@ input LineItemWhereUniqueInput {
 
 type LinkedUser {
   id: ID!
-  inviteSent: Boolean
-  inviteAccepted: Boolean
-  invitedUserName: String
+  createdAt: DateTime!
   linkedUser: User
 }
 
@@ -315,9 +313,6 @@ type LinkedUserConnection {
 
 input LinkedUserCreateInput {
   id: ID
-  inviteSent: Boolean
-  inviteAccepted: Boolean
-  invitedUserName: String
   linkedUser: UserCreateOneWithoutLinkedUserInput
 }
 
@@ -328,9 +323,6 @@ input LinkedUserCreateOneWithoutLinkedUserInput {
 
 input LinkedUserCreateWithoutLinkedUserInput {
   id: ID
-  inviteSent: Boolean
-  inviteAccepted: Boolean
-  invitedUserName: String
 }
 
 type LinkedUserEdge {
@@ -341,19 +333,13 @@ type LinkedUserEdge {
 enum LinkedUserOrderByInput {
   id_ASC
   id_DESC
-  inviteSent_ASC
-  inviteSent_DESC
-  inviteAccepted_ASC
-  inviteAccepted_DESC
-  invitedUserName_ASC
-  invitedUserName_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type LinkedUserPreviousValues {
   id: ID!
-  inviteSent: Boolean
-  inviteAccepted: Boolean
-  invitedUserName: String
+  createdAt: DateTime!
 }
 
 type LinkedUserSubscriptionPayload {
@@ -375,36 +361,14 @@ input LinkedUserSubscriptionWhereInput {
 }
 
 input LinkedUserUpdateInput {
-  inviteSent: Boolean
-  inviteAccepted: Boolean
-  invitedUserName: String
   linkedUser: UserUpdateOneWithoutLinkedUserInput
-}
-
-input LinkedUserUpdateManyMutationInput {
-  inviteSent: Boolean
-  inviteAccepted: Boolean
-  invitedUserName: String
 }
 
 input LinkedUserUpdateOneWithoutLinkedUserInput {
   create: LinkedUserCreateWithoutLinkedUserInput
-  update: LinkedUserUpdateWithoutLinkedUserDataInput
-  upsert: LinkedUserUpsertWithoutLinkedUserInput
   delete: Boolean
   disconnect: Boolean
   connect: LinkedUserWhereUniqueInput
-}
-
-input LinkedUserUpdateWithoutLinkedUserDataInput {
-  inviteSent: Boolean
-  inviteAccepted: Boolean
-  invitedUserName: String
-}
-
-input LinkedUserUpsertWithoutLinkedUserInput {
-  update: LinkedUserUpdateWithoutLinkedUserDataInput!
-  create: LinkedUserCreateWithoutLinkedUserInput!
 }
 
 input LinkedUserWhereInput {
@@ -422,24 +386,14 @@ input LinkedUserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  inviteSent: Boolean
-  inviteSent_not: Boolean
-  inviteAccepted: Boolean
-  inviteAccepted_not: Boolean
-  invitedUserName: String
-  invitedUserName_not: String
-  invitedUserName_in: [String!]
-  invitedUserName_not_in: [String!]
-  invitedUserName_lt: String
-  invitedUserName_lte: String
-  invitedUserName_gt: String
-  invitedUserName_gte: String
-  invitedUserName_contains: String
-  invitedUserName_not_contains: String
-  invitedUserName_starts_with: String
-  invitedUserName_not_starts_with: String
-  invitedUserName_ends_with: String
-  invitedUserName_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   linkedUser: UserWhereInput
   AND: [LinkedUserWhereInput!]
   OR: [LinkedUserWhereInput!]
@@ -461,7 +415,6 @@ type Mutation {
   deleteManyLineItems(where: LineItemWhereInput): BatchPayload!
   createLinkedUser(data: LinkedUserCreateInput!): LinkedUser!
   updateLinkedUser(data: LinkedUserUpdateInput!, where: LinkedUserWhereUniqueInput!): LinkedUser
-  updateManyLinkedUsers(data: LinkedUserUpdateManyMutationInput!, where: LinkedUserWhereInput): BatchPayload!
   upsertLinkedUser(where: LinkedUserWhereUniqueInput!, create: LinkedUserCreateInput!, update: LinkedUserUpdateInput!): LinkedUser!
   deleteLinkedUser(where: LinkedUserWhereUniqueInput!): LinkedUser
   deleteManyLinkedUsers(where: LinkedUserWhereInput): BatchPayload!

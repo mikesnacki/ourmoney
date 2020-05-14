@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { css } from "emotion";
-import { useQuery } from "@apollo/client";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LineItemProps from "../Interfaces/LineItemProps";
 import LineItem from "./LineItem";
-import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
-import { useAuth0 } from "../Hooks/useAuth"
 import Loading from "./Loading";
 import CreateBudgetItem from "./CreateBudgetItem";
 import SignUp from "./Signup"
+import UserContext from "../Context/UserContext"
 
 const calculateLineItem = (inputArray: Array<any>, param: string, type: string, sumField:string) => {
     return inputArray.filter(inputItem=> inputItem[param] === type)
@@ -19,29 +17,15 @@ const calculateLineItem = (inputArray: Array<any>, param: string, type: string, 
 const Budget =()=> {
 
     const [newItemDisplayed, setNewItemDisplayed] = useState<boolean>(false)
+    const { userID, loading, userBudget } = useContext(UserContext)
 
-    const { user } = useAuth0();
+    if (loading) return <Loading/>
 
-    let userBudget: LineItemProps[] = []
-    let userID: string
-
-    const { loading, error, data } = useQuery(GET_USER_DATA, {
-        variables: {user: user.email},
-        pollInterval: 500,
-    });
-
-    if (loading || !user ) {return <Loading/> }
-    if (error) {return <p>Error</p>} 
-
-    if (!data.users[0]){
+    if (!userID){
         return (
-            <SignUp
-                user={user}
-            />
+            <SignUp/>
         )
     }
-    userBudget = data.users[0].lineItems
-    userID = data.users[0].id
 
     const userIncomesObject: LineItemProps = {
         name: "Total Income",

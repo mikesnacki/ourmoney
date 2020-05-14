@@ -8,5 +8,5 @@ interface User {
 }
 
 export default interface NewUserProps {
-    user: User
+    user: User 
 }

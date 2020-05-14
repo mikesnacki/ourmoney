@@ -13,7 +13,7 @@ const Menu =(Props: DisplayProps)=>{
         <Link key={1} className="nav-links" to="/" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Home</Link>,
         isAuthenticated && <Link key={2} className="nav-links" to="/budget" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Our Budget</Link>,
         !isAuthenticated && <span key={3} className="nav-links" onClick={()=>loginWithRedirect({})}>Login</span>,
-        <Link key={4} className="nav-links" to="/profile" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Profile</Link>,
+        isAuthenticated && <Link key={4} className="nav-links" to="/profile" onClick={()=>Props.activateNavDisplay(!Props.navDisplay)}>Profile</Link>,
         isAuthenticated && <span key={5} className="nav-links"onClick={()=>logout()}>Logout</span>,
     ]
 

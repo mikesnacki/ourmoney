@@ -5,9 +5,7 @@ enum LineItemType {
 
 type LinkedUser {
   id: ID! @id
-  inviteSent: Boolean
-  inviteAccepted: Boolean
-  invitedUserName: String
+  createdAt: DateTime! @createdAt
   linkedUser: User
 }
 

@@ -6,9 +6,6 @@ const GET_USER_DATA = gql`
                         id
                         email
                         linkedUser {
-                          inviteSent
-                          inviteAccepted
-                          invitedUserName
                           linkedUser {
                             email
                             lineItems{
