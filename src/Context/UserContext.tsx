@@ -4,32 +4,32 @@ import Loading from "../Components/Loading"
 import LineItemProps from "../Interfaces/LineItemProps";
 import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
 import { useQuery } from "@apollo/client"
+import UserDataProps from "../Interfaces/UserDataProps";
 
 type ContextProps ={
-    userData?: object,
     userID?: string,
     userEmail?: string,
     loading?: boolean;
     children: React.ReactChild | React.ReactChild[];
     userBudget?: LineItemProps[],
+    linkedUserEmail?: string,
+    linkedUserBudget?: LineItemProps[],
 }
 
 const UserContext = createContext({
-    userData: {},
     userEmail: "",
     userID: "",
     loading: false,
-    userBudget: []
+    userBudget: [], 
+    linkedUserEmail: "",
+    linkedUserBudget: [],
 })
+
 export default UserContext
 
 export const UserProvider =(props: ContextProps)=>{
 
     const { user } = useAuth0()
-    let userBudget = []
-    let userID: string
-    let userEmail: string
-    let userData: object
 
     const { data, loading } = useQuery(GET_USER_DATA, {
         variables: {user: user.email},
@@ -38,14 +38,15 @@ export const UserProvider =(props: ContextProps)=>{
 
     if (loading) return <Loading/>
 
-    userBudget = data.users[0].lineItems
-    userID = data.users[0].id
-    userEmail = data.users[0].email
-    userData = user
+    let userBudget = data.users[0].lineItems
+    let userID: string = data.users[0].id
+    let userEmail: string = data.users[0].email
+    let linkedUserEmail = data.users[0].linkedUser.linkedUser.email
+    let linkedUserBudget = data.users[0].linkedUser.linkedUser.lineItems
 
     return (
         <UserContext.Provider
-        value={{userData, userEmail, userID, loading, userBudget}}>
+        value={{ userEmail, userID, loading, userBudget, linkedUserEmail, linkedUserBudget}}>
             {props.children}
         </UserContext.Provider>
     )

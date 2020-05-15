@@ -8,11 +8,8 @@ import Loading from "./Loading";
 import CreateBudgetItem from "./CreateBudgetItem";
 import SignUp from "./Signup"
 import UserContext from "../Context/UserContext"
-
-const calculateLineItem = (inputArray: Array<any>, param: string, type: string, sumField:string) => {
-    return inputArray.filter(inputItem=> inputItem[param] === type)
-                     .reduce((sum, lineItem)=> sum + lineItem[sumField], 0)
-}
+import calculateLineItem from "../Utils/CalculateLineItem"
+import filterLineItemsByType from "../Utils/FilterLineItemsByType"
 
 const Budget =()=> {
 
@@ -50,7 +47,7 @@ const Budget =()=> {
             margin: auto 3vw;`}>
             <h2 className={css`text-align: center;`}>Income</h2>
             {
-                userBudget.filter((lineItem: LineItemProps)=>lineItem.type==="INCOME").map((lineItem : LineItemProps, key: number)=> (
+                filterLineItemsByType(userBudget, "type", "INCOME").map((lineItem : LineItemProps, key: number)=> (
                     <LineItem
                     key={key}
                         lineItem={lineItem}
@@ -64,7 +61,7 @@ const Budget =()=> {
             }
             <h2 className={css`text-align: center;`}>Expense</h2>
             {
-                userBudget.filter((lineItem: LineItemProps)=>lineItem.type==="EXPENSE").map((lineItem : LineItemProps, key: number)=> (
+                filterLineItemsByType(userBudget, "type", "EXPENSE").map((lineItem : LineItemProps, key: number)=> (
                     <LineItem
                         key={key}
                         lineItem={lineItem}
