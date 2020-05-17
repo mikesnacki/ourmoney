@@ -4,7 +4,6 @@ import Loading from "../Components/Loading"
 import LineItemProps from "../Interfaces/LineItemProps";
 import GET_USER_DATA from "../Executables/Queries/GET_USER_DATA"
 import { useQuery } from "@apollo/client"
-import UserDataProps from "../Interfaces/UserDataProps";
 
 type ContextProps ={
     userID?: string,

@@ -9,7 +9,7 @@ export default ThemeContext
 
 export const ThemeProvider =(props: ThemeProps)=> {
     const startTheme = window.localStorage.getItem("theme") === "lightTheme" ? false : true
-    const [dark, setDark] = useState(startTheme)
+    const [dark, setDark] = useState<boolean>(startTheme)
     useLayoutEffect(()=> {
         if (dark){
             setDark(true)

@@ -10,11 +10,14 @@ import SignUp from "./Signup"
 import UserContext from "../Context/UserContext"
 import calculateLineItem from "../Utils/CalculateLineItem"
 import filterLineItemsByType from "../Utils/FilterLineItemsByType"
+import MergeBudgets from "../Utils/MergeBudgets"
 
 const Budget =()=> {
 
-    const [newItemDisplayed, setNewItemDisplayed] = useState<boolean>(false)
-    const { userID, loading, userBudget } = useContext(UserContext)
+    const startShow = window.localStorage.getItem("showLinked") === "showLinkedBudget" ? false : true
+    const [ newItemDisplayed, setNewItemDisplayed ] = useState<boolean>(false)
+    const { userID, loading, userBudget, linkedUserBudget } = useContext(UserContext)
+    const [ showLinkedBudget, setShowLinkedBudget ] = useState<boolean>(startShow)
 
     if (loading) return <Loading/>
 
@@ -42,9 +45,25 @@ const Budget =()=> {
         amount: userIncomesObject.amount - userExpensesObject.amount,
     }
 
+    const handleLinkedBudget =()=>{
+        window.localStorage.setItem('showLinked', showLinkedBudget ? "dontShowLinkedBudget" : "showLinkedBudget");
+        setShowLinkedBudget(!showLinkedBudget)
+    }
+
     return(
         <div className={css`
             margin: auto 3vw;`}>
+            <div>
+                <h2>Displayed linked user Budget</h2>
+                <select
+                name="linkedUser"
+                onChange={handleLinkedBudget}
+                value={showLinkedBudget ? "No" : "Yes"}
+                className="newItemInput linkedUser-dropdown ">
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
             <h2 className={css`text-align: center;`}>Income</h2>
             {
                 filterLineItemsByType(userBudget, "type", "INCOME").map((lineItem : LineItemProps, key: number)=> (
